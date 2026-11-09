@@ -281,13 +281,23 @@
       L: 0, H: 0,
       C: 0, R: 0
     };
+    const axisMax = {
+      tempo: 0,
+      decision: 0,
+      collab: 0,
+      crisis: 0
+    };
 
     window.MKBIZ_DATA.questions.forEach((q) => {
+      const w = typeof q.weight === "number" ? q.weight : 1;
+      if (axisMax[q.axis] !== undefined) {
+        axisMax[q.axis] += w;
+      }
       const ans = state.answers[q.id];
       if (ans && counts[ans] !== undefined) {
-        counts[ans] += 1;
+        counts[ans] += w;
       } else {
-        counts[q.optionA.code] += 1;
+        counts[q.optionA.code] += w;
       }
     });
 
@@ -297,13 +307,13 @@
     const t4 = counts.C >= counts.R ? "C" : "R";
 
     const code = `${t1}${t2}${t3}${t4}`;
-    const toPct = (c) => Math.min(100, Math.max(60, Math.round((c / 5) * 100)));
+    const toPct = (c, maxW) => Math.min(100, Math.max(56, Math.round((c / (maxW || 4)) * 100)));
 
     const axisScores = {
-      tempo: { winner: t1, count: counts[t1], pct: toPct(counts[t1]) },
-      decision: { winner: t2, count: counts[t2], pct: toPct(counts[t2]) },
-      collab: { winner: t3, count: counts[t3], pct: toPct(counts[t3]) },
-      crisis: { winner: t4, count: counts[t4], pct: toPct(counts[t4]) }
+      tempo: { winner: t1, count: counts[t1], pct: toPct(counts[t1], axisMax.tempo) },
+      decision: { winner: t2, count: counts[t2], pct: toPct(counts[t2], axisMax.decision) },
+      collab: { winner: t3, count: counts[t3], pct: toPct(counts[t3], axisMax.collab) },
+      crisis: { winner: t4, count: counts[t4], pct: toPct(counts[t4], axisMax.crisis) }
     };
 
     return { code, axisScores };
@@ -404,7 +414,7 @@
       resumeHtml = `
         <section class="resume-banner" aria-label="이어하기 안내">
           <div>
-            <span class="resume-banner-text">작성 중이던 시트가 남아 있어요 (${answeredCount} / 20문항)</span>
+            <span class="resume-banner-text">작성 중이던 시트가 남아 있어요 (${answeredCount} / 15문항)</span>
             <span class="resume-banner-sub">${escapeHtml(savedProgress.nickname || "익명")}님으로 이어서 진행할까요?</span>
           </div>
           <button type="button" class="btn btn-primary btn-sm" id="btnResumeQuiz">이어하기</button>
@@ -421,7 +431,7 @@
 
         <div class="cover-badge-row">
           <span class="stamp-pill accent">매경비즈 직장인 성향 테스트</span>
-          <span class="stamp-pill">총 20문항 · 약 3분</span>
+          <span class="stamp-pill">총 15문항 · 약 2분</span>
         </div>
 
         <h1 class="cover-headline">
@@ -430,7 +440,7 @@
         </h1>
         <p class="cover-subcopy">
           정장 입은 호랑이 대리부터 커리어 블레이저를 입은 토끼 프로까지!<br />
-          20가지 오피스 상황으로 나의 업무 유형과 찰떡 동료를 확인해 보세요.
+          15가지 현실 오피스 상황으로 나의 업무 유형과 찰떡 동료를 확인해 보세요.
         </p>
 
         <!-- 엑셀 표 스타일 대표 유형 쇼케이스 (유형별 맞춤 동물 & 오피스 착장 미리보기) -->
