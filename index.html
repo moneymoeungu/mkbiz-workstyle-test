@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>매경비즈 직장인 성향 테스트 (.xlsx)</title>
+    <meta
+      name="description"
+      content="3분이면 확인하는 나의 직장인 성향 유형과 동료 업무 궁합 시트"
+    />
+
+    <!-- 카카오톡·사내 메신저 공유 미리보기 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="[매경비즈] 직장인 성향 테스트 : 나는 어떤 오피스 유형일까?" />
+    <meta
+      property="og:description"
+      content="마감 불도저 호랑이부터 기획 로켓 토끼까지, 16가지 직장인 유형과 동료 궁합을 확인해 보세요."
+    />
+    <meta name="theme-color" content="#1D6F42" />
+
+    <link rel="stylesheet" href="./css/styles.css?v=20261109_8" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- 1. 엑셀 상단 윈도우 타이틀 바 (Excel Green) -->
+      <header class="masthead" role="banner">
+        <div class="masthead-brand" id="brandHomeBtn" role="button" tabindex="0" aria-label="처음 화면으로 이동">
+          <span class="excel-app-badge">X</span>
+          <span class="masthead-title">매경비즈_직장인_성향_테스트_최종.xlsx</span>
+        </div>
+
+        <div class="masthead-actions">
+          <button type="button" class="masthead-btn" id="openDexHeaderBtn" title="전체 16유형 시트 열기">
+            <span>16유형 DB</span>
+            <span class="badge-count" id="dexCountBadge">0/16</span>
+          </button>
+          <button type="button" class="masthead-btn" id="openAxStatsBtn" title="AX TF 익명 통계 시트">
+            <span>통계</span>
+          </button>
+          <div class="window-controls" aria-hidden="true">
+            <span class="win-icon">—</span>
+            <span class="win-icon">□</span>
+            <span class="win-icon close">✕</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- 2. 엑셀 수식 입력줄 (Formula Bar) -->
+      <div class="excel-formula-bar" aria-hidden="true">
+        <div class="excel-name-box">
+          <span id="excelCellRef">B2</span>
+          <span class="excel-dropdown-caret">▾</span>
+        </div>
+        <div class="excel-fx-badge">fx</div>
+        <div class="excel-formula-input" id="excelFormulaText">
+          =VLOOKUP(내성향, 매경비즈_직장인유형_16종, "사원증_발급", FALSE)
+        </div>
+      </div>
+
+      <!-- 3. 엑셀 열 머리글 (Select-All 모서리 삼각형 + A B C D 열 헤더) -->
+      <div class="excel-col-headers" aria-hidden="true">
+        <div class="excel-corner-cell">
+          <span class="corner-triangle">◢</span>
+        </div>
+        <div class="excel-col-cell">A</div>
+        <div class="excel-col-cell">B</div>
+        <div class="excel-col-cell">C</div>
+        <div class="excel-col-cell">D</div>
+      </div>
+
+      <!-- 4. 메인 워크시트 영역 (모눈종이 셀 그리드 배경) -->
+      <main id="mainStage" class="main-stage" role="main"></main>
+
+      <!-- 5. 엑셀 하단 시트 탭 바 (Sheet Tabs) -->
+      <nav class="excel-sheet-tabs" aria-label="워크시트 탭 이동">
+        <div class="sheet-nav-arrows" aria-hidden="true">
+          <span>◀</span>
+          <span>▶</span>
+        </div>
+        <button type="button" class="sheet-tab active" data-sheet-tab="cover" id="tabSheetCover">
+          사원등록_홈
+        </button>
+        <button type="button" class="sheet-tab" data-sheet-tab="result" id="tabSheetResult">
+          내결과_사원증
+        </button>
+        <button type="button" class="sheet-tab" data-sheet-tab="dex" id="tabSheetDex">
+          16유형_전체시트
+        </button>
+        <button type="button" class="sheet-tab" data-sheet-tab="stats" id="tabSheetStats">
+          AX_익명통계
+        </button>
+      </nav>
+
+      <!-- 6. 공통 하단 면책 문구 (엑셀 상태 표시줄 스타일) -->
+      <footer class="app-footer" role="contentinfo">
+        <div class="excel-status-bar">
+          <span>준비 (Ready)</span>
+          <span>자동 계산: 켜짐</span>
+          <span>매경비즈 AX TF</span>
+        </div>
+        <p style="font-weight: 700; color: var(--ink-body); margin-top: 8px;">
+          재미로 보는 결과이며 전문 심리검사나 인사·평가·배치에 쓰이지 않습니다.
+        </p>
+        <p>
+          입력하신 닉네임과 개인별 결과는 서버에 저장되지 않으며, 개인 식별 정보 없이 익명 통계만 집계됩니다.
+        </p>
+      </footer>
+    </div>
+
+    <!-- 모달 및 토스트 영역 -->
+    <div id="modalContainer"></div>
+    <div id="toastBox" class="toast-container" role="status" aria-live="polite"></div>
+
+    <!-- 데이터 및 모듈 스크립트 로드 -->
+    <script src="./js/data.js?v=20261109_8"></script>
+    <script src="./js/pixelArt.js?v=20261109_8"></script>
+    <script src="./js/cardExporter.js?v=20261109_8"></script>
+    <script src="./js/analytics.js?v=20261109_8"></script>
+    <script src="./js/app.js?v=20261109_8"></script>
+  </body>
+</html>

@@ -1,0 +1,1377 @@
+@charset "UTF-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root {
+  /* 엑셀(Excel) 오피스 테마 팔레트 */
+  --excel-green: #1D6F42;
+  --excel-green-dark: #145330;
+  --excel-green-hover: #185C37;
+  --excel-green-soft: #E8F3EC;
+  --excel-green-tint: #D5EBE0;
+  --excel-grid-line: #DCE5DF;
+  --excel-cell-border: #C4D1C8;
+  --excel-header-bg: #EDF2EE;
+
+  --bg-page: #E5ECE8;
+  --bg-surface: #FFFFFF;
+  --bg-paper: #F4F8F5;
+  --bg-subtle: #EAF0EC;
+
+  --ink-black: #161E19;
+  --ink-body: #2C3830;
+  --ink-muted: #5C6B61;
+  --ink-faint: #8A998F;
+
+  /* 포인트 컬러 호환 변수 */
+  --mk-orange: #1D6F42;
+  --mk-orange-hover: #145330;
+  --mk-orange-soft: #E8F3EC;
+  --mk-navy: #1E3A5F;
+  --mk-navy-soft: #EDF3FA;
+  --mk-green: #1D6F42;
+  --mk-green-soft: #E8F3EC;
+  --mk-rose: #B91C1C;
+  --mk-rose-soft: #FEF2F2;
+
+  --line-strong: #1D6F42;
+  --line-default: #C4D1C8;
+  --line-subtle: #DCE5DF;
+
+  --shadow-card: 0 2px 8px rgba(20, 45, 30, 0.06);
+  --shadow-modal: 0 18px 42px rgba(15, 35, 22, 0.22);
+
+  --radius-card: 4px;
+  --radius-btn: 4px;
+  --radius-pill: 3px;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: "Consolas", "SFMono-Regular", Menlo, Monaco, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--bg-page);
+  color: var(--ink-black);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.58;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, span, div, button, label, li, strong, td, th {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ================= 엑셀 통합 문서(Workbook) 앱 셸 ================= */
+.app-shell {
+  width: 100%;
+  max-width: 540px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-left: 1px solid #B8C7BD;
+  border-right: 1px solid #B8C7BD;
+  box-shadow: 0 0 28px rgba(15, 35, 22, 0.09);
+}
+
+/* 1. 엑셀 상단 녹색 윈도우 타이틀 바 */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: var(--excel-green);
+  color: #FFFFFF;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--excel-green-dark);
+}
+
+.masthead-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+}
+
+.excel-app-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: #FFFFFF;
+  color: var(--excel-green);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 900;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.masthead-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.masthead-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.masthead-btn {
+  appearance: none;
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.masthead-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* 카드 내부에서 쓰이는 라이트 모드용 .masthead-btn 오버라이드 */
+.main-stage .masthead-btn,
+.modal-sheet .masthead-btn {
+  background-color: #FFFFFF;
+  color: var(--ink-body);
+  border: 1px solid var(--excel-cell-border);
+}
+
+.main-stage .masthead-btn:hover,
+.modal-sheet .masthead-btn:hover {
+  border-color: var(--excel-green);
+  color: var(--excel-green);
+}
+
+.masthead-btn .badge-count {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #D5EBE0;
+}
+
+.window-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  user-select: none;
+}
+
+.win-icon {
+  display: inline-block;
+  line-height: 1;
+  font-weight: 600;
+}
+
+/* 2. 엑셀 수식 입력줄 (Formula Bar) */
+.excel-formula-bar {
+  display: flex;
+  align-items: center;
+  background-color: #F3F6F4;
+  border-bottom: 1px solid var(--excel-cell-border);
+  padding: 5px 8px;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.excel-name-box {
+  background-color: #FFFFFF;
+  border: 1px solid var(--excel-cell-border);
+  padding: 2px 8px;
+  min-width: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink-black);
+  white-space: nowrap;
+}
+
+.excel-dropdown-caret {
+  font-size: 9px;
+  color: var(--ink-muted);
+}
+
+.excel-fx-badge {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--excel-green);
+  padding: 0 4px;
+  user-select: none;
+}
+
+.excel-formula-input {
+  flex: 1;
+  background-color: #FFFFFF;
+  border: 1px solid var(--excel-cell-border);
+  padding: 3px 9px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 3. 엑셀 열 머리글 (◢ | A | B | C | D) */
+.excel-col-headers {
+  display: grid;
+  grid-template-columns: 32px repeat(4, 1fr);
+  background-color: var(--excel-header-bg);
+  border-bottom: 1px solid var(--excel-cell-border);
+  height: 24px;
+  user-select: none;
+}
+
+.excel-corner-cell {
+  border-right: 1px solid var(--excel-cell-border);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 2px 4px;
+  background-color: #E3EAE5;
+}
+
+.corner-triangle {
+  font-size: 10px;
+  color: #7D8F83;
+  line-height: 1;
+}
+
+.excel-col-cell {
+  border-right: 1px solid var(--excel-cell-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.excel-col-cell:last-child {
+  border-right: none;
+}
+
+/* 4. 메인 워크시트 스테이지 (모눈종이 격자 배경) */
+.main-stage {
+  flex: 1;
+  padding: 16px 14px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background-color: #FAFDFB;
+  background-image:
+    linear-gradient(to right, var(--excel-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--excel-grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* 5. 엑셀 시트 카드 (스프레드시트 병합 셀 블록 스타일) */
+.editorial-card {
+  background-color: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--excel-cell-border);
+  border-top: 3px solid var(--excel-green);
+  border-radius: var(--radius-card);
+  padding: 20px 18px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+/* 엑셀 활성 셀 우측 하단 초록색 자동채우기 핸들 포인트 */
+.editorial-card::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--excel-green);
+  border: 1px solid #FFFFFF;
+}
+
+/* 사원증 펀칭 슬롯 */
+.lanyard-slot {
+  width: 48px;
+  height: 6px;
+  background-color: var(--excel-header-bg);
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 99px;
+  margin: 0 auto 14px;
+}
+
+/* 배지 & 셀 태그 */
+.stamp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--excel-cell-border);
+  background-color: var(--bg-paper);
+  color: var(--ink-body);
+  white-space: nowrap;
+}
+
+.stamp-pill.accent {
+  background-color: var(--excel-green-soft);
+  color: var(--excel-green);
+  border-color: #A7D4B8;
+}
+
+/* ================= 커버(홈) 화면: 엑셀 표지 & 사원 등록 ================= */
+.cover-badge-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.cover-headline {
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.32;
+  text-align: center;
+  letter-spacing: -0.035em;
+  margin-bottom: 10px;
+  color: var(--ink-black);
+  text-wrap: balance;
+}
+
+/* 레퍼런스 이미지(직장인 유형 테스트)의 녹색 형광펜 브러시 하이라이트 효과 */
+.cover-headline .highlight {
+  color: var(--excel-green);
+  background: linear-gradient(180deg, transparent 52%, #D4EDE0 52%);
+  padding: 0 4px;
+}
+
+.cover-subcopy {
+  font-size: 14px;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-bottom: 18px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* 엑셀 표 스타일 캐릭터 미리보기 테이블 */
+.cover-stage-box {
+  background-color: #FFFFFF;
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.excel-table-header-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: var(--excel-header-bg);
+  border-bottom: 1px solid var(--excel-cell-border);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.excel-table-header-row > div {
+  padding: 5px 4px;
+  border-right: 1px solid var(--excel-cell-border);
+}
+
+.excel-table-header-row > div:last-child {
+  border-right: none;
+}
+
+.cover-char-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cover-char-card {
+  background-color: #FFFFFF;
+  border-right: 1px solid var(--excel-cell-border);
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cover-char-card:last-child {
+  border-right: none;
+}
+
+.pixel-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.cover-char-code {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--excel-green);
+  margin-top: 6px;
+  white-space: nowrap;
+}
+
+.cover-char-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink-black);
+  margin-top: 1px;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+/* 엑셀 셀 입력 폼 영역 */
+.excel-input-sheet {
+  border: 2px solid var(--excel-green);
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.excel-input-sheet-head {
+  background-color: var(--excel-green-soft);
+  border-bottom: 1px solid #B5DAC3;
+  padding: 7px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--excel-green-dark);
+}
+
+.excel-input-sheet-body {
+  padding: 14px 12px;
+}
+
+.text-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink-black);
+  background-color: #FAFDFB;
+  border: 1.5px solid var(--excel-cell-border);
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.text-input:focus {
+  background-color: #FFFFFF;
+  border-color: var(--excel-green);
+  box-shadow: 0 0 0 3px rgba(29, 111, 66, 0.14);
+}
+
+.text-input::placeholder {
+  color: var(--ink-faint);
+  font-weight: 400;
+}
+
+.input-error {
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mk-rose);
+  min-height: 18px;
+}
+
+.excel-type-notice {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background-color: var(--bg-paper);
+  border: 1px dashed var(--excel-cell-border);
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* 안심 안내 리스트 */
+.trust-checklist {
+  background-color: var(--bg-paper);
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 3px;
+  padding: 11px 13px;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+.trust-item strong {
+  color: var(--ink-black);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 초대장 & 이어하기 배너 */
+.invite-ticket {
+  background-color: #FFFFFF;
+  border: 2px solid var(--excel-green);
+  border-radius: 4px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.invite-ticket-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.invite-ticket-badge {
+  background-color: var(--excel-green);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.invite-ticket-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--ink-black);
+}
+
+.resume-banner {
+  background-color: var(--excel-green-soft);
+  border: 1px solid #95C9AA;
+  border-radius: 4px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.resume-banner-text {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--excel-green-dark);
+}
+
+.resume-banner-sub {
+  font-size: 12px;
+  color: var(--ink-muted);
+  display: block;
+}
+
+/* ================= 버튼 시스템 ================= */
+.btn {
+  appearance: none;
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 16px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--excel-cell-border);
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.08s ease;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn-primary {
+  background-color: var(--excel-green);
+  border-color: var(--excel-green-dark);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background-color: var(--excel-green-hover);
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--excel-green);
+  color: var(--excel-green-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--excel-green-soft);
+}
+
+.btn-navy {
+  background-color: var(--ink-black);
+  border-color: var(--ink-black);
+  color: #FFFFFF;
+}
+
+.btn-subtle {
+  background-color: var(--bg-paper);
+  color: var(--ink-body);
+  border: 1px solid var(--excel-cell-border);
+  min-height: 44px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.btn-subtle:hover {
+  background-color: var(--excel-green-soft);
+  border-color: var(--excel-green);
+  color: var(--excel-green-dark);
+}
+
+.btn-sm {
+  width: auto;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+/* ================= 20문항 퀴즈 화면 (엑셀 행 선택 스타일) ================= */
+.quiz-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.back-step-btn {
+  appearance: none;
+  background: #FFFFFF;
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 3px;
+  padding: 5px 10px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-body);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.back-step-btn:hover {
+  border-color: var(--excel-green);
+  color: var(--excel-green);
+}
+
+.quiz-counter {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--excel-green);
+  background-color: var(--excel-green-soft);
+  border: 1px solid #A7D4B8;
+  padding: 3px 9px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: #DFE7E2;
+  border: 1px solid var(--excel-cell-border);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--excel-green);
+  transition: width 0.22s ease;
+}
+
+.question-context-chip {
+  display: inline-block;
+  padding: 3px 9px;
+  background-color: var(--excel-green-soft);
+  color: var(--excel-green-dark);
+  border: 1px solid #B5DAC3;
+  border-radius: 3px;
+  font-size: 11.5px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.question-title {
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 1.46;
+  margin-bottom: 18px;
+  color: var(--ink-black);
+  text-wrap: pretty;
+}
+
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-card-btn {
+  appearance: none;
+  width: 100%;
+  min-height: 74px;
+  text-align: left;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--excel-cell-border);
+  border-radius: 4px;
+  padding: 14px 14px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--font-sans);
+  position: relative;
+  transition: border-color 0.14s ease, background-color 0.14s ease;
+}
+
+.choice-card-btn:hover {
+  border-color: var(--excel-green);
+  background-color: #F6FBF8;
+}
+
+.choice-card-btn.selected {
+  background-color: var(--excel-green-soft);
+  border: 2px solid var(--excel-green);
+}
+
+.choice-card-btn.selected::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--excel-green);
+}
+
+.choice-key-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  border: 1px solid var(--excel-cell-border);
+  background-color: var(--excel-header-bg);
+  color: var(--ink-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 800;
+  margin-top: 1px;
+}
+
+.choice-card-btn:hover .choice-key-badge,
+.choice-card-btn.selected .choice-key-badge {
+  background-color: var(--excel-green);
+  color: #FFFFFF;
+  border-color: var(--excel-green);
+}
+
+.choice-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-black);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.keyboard-hint {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+
+/* ================= 결과 화면: 엑셀 사원증 리포트 시트 ================= */
+.id-card-frame {
+  background-color: #FFFFFF;
+  border: 2px solid var(--excel-green);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.id-card-topbar {
+  background-color: var(--excel-green);
+  color: #FFFFFF;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.id-card-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.id-card-code-pill {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.id-card-body {
+  padding: 22px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.id-card-owner {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+.id-card-typename {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--ink-black);
+}
+
+/* 동물 캐릭터 & 오피스 착장 소개 배지 */
+.character-outfit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--excel-green-soft);
+  border: 1px solid #A7D4B8;
+  color: var(--excel-green-dark);
+  padding: 4px 11px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.id-card-hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.hashtag-chip {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 3px;
+  background-color: var(--bg-paper);
+  border: 1px solid var(--excel-cell-border);
+  color: var(--ink-body);
+  white-space: nowrap;
+}
+
+.id-card-avatar-wrap {
+  width: 224px;
+  height: 224px;
+  border: 1.5px solid var(--excel-cell-border);
+  border-radius: 6px;
+  background-color: #F9FBF9;
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.id-card-summary-banner {
+  width: 100%;
+  background-color: var(--bg-paper);
+  border: 1px solid var(--excel-cell-border);
+  border-left: 4px solid var(--excel-green);
+  border-radius: 3px;
+  padding: 13px 14px;
+  text-align: center;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink-black);
+  line-height: 1.48;
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+
+/* 엑셀 조건부 서식(Data Bar) 스타일 4축 표 */
+.excel-axis-table {
+  width: 100%;
+  border: 1px solid var(--excel-cell-border);
+  border-collapse: collapse;
+  font-size: 12.5px;
+  background-color: #FFFFFF;
+}
+
+.excel-axis-table th {
+  background-color: var(--excel-header-bg);
+  border: 1px solid var(--excel-cell-border);
+  padding: 6px 8px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--ink-muted);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.excel-axis-table td {
+  border: 1px solid var(--excel-cell-border);
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.excel-databar-wrap {
+  position: relative;
+  height: 22px;
+  background-color: #F1F5F2;
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.excel-databar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0.22;
+}
+
+.excel-databar-text {
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--ink-black);
+  white-space: nowrap;
+}
+
+/* 섹션 헤더 */
+.section-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--excel-cell-border);
+}
+
+.section-num-tag {
+  background-color: var(--excel-green);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.section-title {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink-black);
+}
+
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  background-color: #FFFFFF;
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 3px;
+  padding: 12px 13px;
+  font-size: 13.5px;
+  line-height: 1.54;
+  color: var(--ink-body);
+}
+
+.detail-item-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+.quote-bubble {
+  background-color: var(--excel-green-soft);
+  border: 1px solid #A7D4B8;
+  border-left: 4px solid var(--excel-green);
+  border-radius: 3px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-black);
+  margin: 10px 0;
+  line-height: 1.48;
+}
+
+/* 궁합 미니 카드 2열 */
+.match-pair-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.match-mini-card {
+  border: 1.5px solid var(--excel-cell-border);
+  border-radius: 4px;
+  padding: 12px 10px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.match-mini-card:hover {
+  border-color: var(--excel-green);
+  background-color: #F6FBF8;
+}
+
+.match-mini-card .pixel-canvas {
+  width: 96px;
+  height: 96px;
+  border-radius: 6px;
+  border: 1px solid var(--excel-cell-border);
+}
+
+.action-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.groupchat-copy-box {
+  background-color: var(--bg-paper);
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.groupchat-copy-text {
+  font-size: 12.5px;
+  color: var(--ink-body);
+  background-color: #FFFFFF;
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 3px;
+  padding: 10px;
+  margin: 8px 0;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+/* 별점 5점 척도 */
+.star-rating-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.star-btn {
+  appearance: none;
+  flex: 1;
+  height: 40px;
+  border-radius: 3px;
+  border: 1px solid var(--excel-cell-border);
+  background-color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-body);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.star-btn.active {
+  background-color: var(--excel-green);
+  color: #FFFFFF;
+  border-color: var(--excel-green-dark);
+}
+
+/* ================= 5. 엑셀 하단 시트 탭 바 (Sheet Tabs) ================= */
+.excel-sheet-tabs {
+  display: flex;
+  align-items: stretch;
+  background-color: #E3EAE5;
+  border-top: 1px solid var(--excel-cell-border);
+  border-bottom: 1px solid var(--excel-cell-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.excel-sheet-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.sheet-nav-arrows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-size: 10px;
+  color: var(--ink-muted);
+  border-right: 1px solid var(--excel-cell-border);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.sheet-tab {
+  appearance: none;
+  background-color: #E3EAE5;
+  border: none;
+  border-right: 1px solid var(--excel-cell-border);
+  border-bottom: 3px solid transparent;
+  padding: 8px 13px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.sheet-tab:hover {
+  background-color: #EEF4F0;
+  color: var(--ink-black);
+}
+
+.sheet-tab.active {
+  background-color: #FFFFFF;
+  color: var(--excel-green);
+  border-bottom-color: var(--excel-green);
+  font-weight: 800;
+}
+
+/* ================= 6. 푸터 & 엑셀 상태 표시줄 ================= */
+.app-footer {
+  padding: 0 14px 20px;
+  background-color: #F3F6F4;
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.excel-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--excel-cell-border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--excel-green-dark);
+}
+
+/* ================= 모달 및 토스트 ================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(15, 28, 20, 0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-sheet {
+  width: 100%;
+  max-width: 500px;
+  max-height: 88dvh;
+  overflow-y: auto;
+  background-color: #FFFFFF;
+  border: 2px solid var(--excel-green);
+  border-radius: 4px;
+  box-shadow: var(--shadow-modal);
+  padding: 20px 18px;
+}
+
+.type-grid-16 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.type-dex-cell {
+  border: 1px solid var(--excel-cell-border);
+  border-radius: 3px;
+  padding: 8px 4px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.type-dex-cell:hover {
+  border-color: var(--excel-green);
+  background-color: var(--excel-green-soft);
+}
+
+.type-dex-cell.collected {
+  background-color: #F4FAF6;
+  border-color: var(--excel-green);
+}
+
+.type-dex-name {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-black);
+  line-height: 1.25;
+  margin-top: 4px;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 200;
+  background-color: var(--excel-green-dark);
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast-container.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 390px) {
+  .cover-headline {
+    font-size: 24px;
+  }
+  .type-grid-16 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
