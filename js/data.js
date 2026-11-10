@@ -379,7 +379,7 @@ window.MKBIZ_DATA = {
   ],
 
   /**
-   * 16유형 상세 콘텐츠 (PRD 5번, 7번, 10번 F-08/F-09/F-16 반영)
+   * 16유형 상세 콘텐츠 (PRD 5번, 7번, 10번 F-08/F-09 반영)
    */
   types: {
     SDLC: {
@@ -400,12 +400,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“결론부터 말씀드리면요, 이 안이 수치상 가장 확실합니다. 오늘 바로 가시죠!”",
       colleagueTip: "결론과 핵심 데이터를 먼저 두괄식으로 공유해 주면 누구보다 든든한 우군이 됩니다.",
       bestMatch: "SDHR",
-      worstMatch: "MILC",
-      recommendedArticles: [
-        { dept: "전략·경영", title: "빠른 실행 조직이 숫자로 일하는 법: OKR과 주간 스프린트의 결합" },
-        { dept: "콘텐츠·AX", title: "생성형 AI로 제안서 초안 시간을 70% 단축한 현업 프롬프트 레시피" },
-        { dept: "MICE·교육", title: "대형 프로젝트 D-7, 의사결정 병목을 없애는 리더의 체크리스트" }
-      ]
+      worstMatch: "MILC"
     },
     SDLR: {
       code: "SDLR",
@@ -425,12 +420,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“잠깐만요, 지난 분기 데이터부터 확인해 보고 가장 확률 높은 쪽에 집중하죠.”",
       colleagueTip: "급하게 재촉하기보다 10분만 검토할 시간을 주면 가장 날카로운 해법을 가져옵니다.",
       bestMatch: "SDHC",
-      worstMatch: "MILR",
-      recommendedArticles: [
-        { dept: "콘텐츠·미디어", title: "독자의 클릭을 부르는 데이터 저널리즘과 헤드라인 A/B 테스트" },
-        { dept: "전략·기획", title: "불확실성 시대의 시나리오 플래닝: 위기를 기회로 바꾸는 냉정한 복기" },
-        { dept: "교육·리더십", title: "말수를 줄이고 설득력을 높이는 한 장 보고서 구조화 기술" }
-      ]
+      worstMatch: "MILR"
     },
     SDHC: {
       code: "SDHC",
@@ -450,12 +440,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“제가 방금 확인해 봤는데, 이 방식으로 조율하면 양쪽 팀 다 일정 맞출 수 있어요!”",
       colleagueTip: "구체적인 현장 상황과 제약을 솔직하게 털어놓으면 그 자리에서 맞춤형 대안을 함께 찾아줍니다.",
       bestMatch: "SDLR",
-      worstMatch: "MIHC",
-      recommendedArticles: [
-        { dept: "MICE·행사", title: "성공적인 비즈니스 포럼 운영의 비밀: 현장 변수 0%에 도전하는 실전 매뉴얼" },
-        { dept: "협업·소통", title: "부서 간 사일로(Silo)를 허무는 데이터 기반 코워킹 스킬" },
-        { dept: "AX·생산성", title: "실무자가 바로 쓰는 노코드 자동화로 반복 문의 처리 시간 줄이기" }
-      ]
+      worstMatch: "MIHC"
     },
     SDHR: {
       code: "SDHR",
@@ -475,12 +460,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“방향 아주 좋은데요! 다만 3페이지 수치만 한 번 더 크로스체크하고 내보내면 완벽할 것 같아요.”",
       colleagueTip: "최종 오픈이나 발송 전에 이 동료에게 5분만 검토를 부탁해 보세요. 치명적인 실수를 막아줍니다.",
       bestMatch: "SDLC",
-      worstMatch: "MIHR",
-      recommendedArticles: [
-        { dept: "콘텐츠·편집", title: "신뢰도를 결정하는 마지막 1%: 비즈니스 콘텐츠 팩트체크 체크리스트" },
-        { dept: "전략·리스크", title: "빠른 조직일수록 필요한 '프리모템(Pre-mortem)' 리스크 예방 기법" },
-        { dept: "AX·데이터", title: "엑셀과 AI를 연동해 데이터 정합성 검수를 3분 만에 끝내는 법" }
-      ]
+      worstMatch: "MIHR"
     },
     SILC: {
       code: "SILC",
@@ -500,12 +480,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“이거 지금 딱 뜨는 흐름이에요! 거창한 보고서 말고 일단 파일럿부터 바로 띄워보죠!”",
       colleagueTip: "안 되는 이유 10가지보다 '어떻게 하면 될까'를 함께 상상해 줄 때 폭발적인 시너지를 냅니다.",
       bestMatch: "SIHR",
-      worstMatch: "MDLC",
-      recommendedArticles: [
-        { dept: "신사업·기획", title: "제로 투 원(0 to 1): 사내 벤처와 신규 IP가 시장을 설득하는 첫 3분" },
-        { dept: "MICE·트렌드", title: "글로벌 컨퍼런스에서 포착한 내년 비즈니스 키워드 7선" },
-        { dept: "AX·크리에이티브", title: "아이디어 스케치부터 시안 제작까지, 기획자를 위한 생성형 AI 워크플로우" }
-      ]
+      worstMatch: "MDLC"
     },
     SILR: {
       code: "SILR",
@@ -525,12 +500,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“디테일은 잠시 접어두고요, 이번 프로젝트의 핵심 한 줄이 뭔지부터 다시 맞춰봅시다.”",
       colleagueTip: "세부 항목 보고에 앞서 전체 기획의 의도와 스토리를 먼저 브리핑하면 단번에 통합니다.",
       bestMatch: "SIHC",
-      worstMatch: "MDLR",
-      recommendedArticles: [
-        { dept: "콘텐츠·브랜딩", title: "기억에 남는 비즈니스 네이밍과 카피라이팅의 법칙" },
-        { dept: "교육·기획", title: "수강생의 몰입을 이끄는 스토리텔링형 커리큘럼 디렉팅" },
-        { dept: "리더십", title: "위기 속에서 흔들리지 않는 리더의 메타인지와 관점 전환" }
-      ]
+      worstMatch: "MDLR"
     },
     SIHC: {
       code: "SIHC",
@@ -550,12 +520,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“오, 그 아이디어 재밌는데요? 거기에 우리 팀 거 살짝 얹어서 지금 바로 테스트해 볼까요?”",
       colleagueTip: "가벼운 티타임이나 브레인스토밍 자리에서 의견을 구하면 생각지도 못한 묘안을 선물해 줍니다.",
       bestMatch: "SILR",
-      worstMatch: "MDHC",
-      recommendedArticles: [
-        { dept: "MICE·네트워킹", title: "참가자가 먼저 말을 걸게 만드는 오프라인 이벤트 경험(UX) 설계" },
-        { dept: "조직문화", title: "심리적 안전감이 높은 팀은 회의 첫 5분을 어떻게 쓰는가" },
-        { dept: "콘텐츠·트렌드", title: "MZ부터 시니어까지 함께 반응하는 B2B 콘텐츠 톤앤매너의 비밀" }
-      ]
+      worstMatch: "MDHC"
     },
     SIHR: {
       code: "SIHR",
@@ -575,12 +540,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“잠시만요, 받는 분 입장에서 이 표현이 어떻게 읽힐지 한 번만 더 생각해 보면 좋겠어요.”",
       colleagueTip: "숫자 압박보다 '이 일이 사람들에게 어떤 가치를 주는지' 공감대를 나누면 200%의 역량을 발휘합니다.",
       bestMatch: "SILC",
-      worstMatch: "MDHR",
-      recommendedArticles: [
-        { dept: "콘텐츠·큐레이션", title: "정보 과잉 시대, 독자의 마음을 머물게 하는 에디토리얼 큐레이션의 힘" },
-        { dept: "교육·HRD", title: "성인 학습자의 자발적 참여를 이끄는 공감형 교육 설계 가이드" },
-        { dept: "워라밸·케어", title: "번아웃 없이 고밀도 몰입을 유지하는 크리에이터의 휴식 루틴" }
-      ]
+      worstMatch: "MDHR"
     },
     MDLC: {
       code: "MDLC",
@@ -600,12 +560,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“전체 일정표와 예산 시뮬레이션 준비해 왔습니다. 1안으로 결정하고 바로 실행 단계로 넘어가시죠.”",
       colleagueTip: "일정이나 스펙 변경이 필요할 땐 최소 한 템포 일찍, 변경 사유와 데이터를 함께 공유해 주세요.",
       bestMatch: "MDHR",
-      worstMatch: "SILC",
-      recommendedArticles: [
-        { dept: "교육·기획", title: "기업 교육 담당자가 신뢰하는 체계적 커리큘럼 설계(ISD) 프레임워크" },
-        { dept: "전략·PM", title: "실패하지 않는 대형 프로젝트 관리: WBS와 리스크 매트릭스 실전편" },
-        { dept: "AX·업무혁신", title: "사내 지식 자산을 체계화하는 문서 표준화와 AI 검색 연동 전략" }
-      ]
+      worstMatch: "SILC"
     },
     MDLR: {
       code: "MDLR",
@@ -625,12 +580,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“서두를 필요 없습니다. 시나리오별 손익 계산은 끝났으니 가장 확실한 2단계부터 밟아 나가죠.”",
       colleagueTip: "감성적인 호소보다 명확한 배경 자료와 논리적 인과관계를 먼저 제시하면 가장 빠르게 설득됩니다.",
       bestMatch: "MDHC",
-      worstMatch: "SILR",
-      recommendedArticles: [
-        { dept: "전략기획", title: "중장기 사업 포트폴리오 재편: 데이터로 읽는 B2B 시장의 다음 5년" },
-        { dept: "의사결정", title: "확증 편향을 이기는 리더의 도구: 레드팀(Red Team)과 의사결정 트리" },
-        { dept: "AX·인사이트", title: "축적된 사내 데이터를 경영 인사이트로 바꾸는 BI 대시보드 구축기" }
-      ]
+      worstMatch: "SILR"
     },
     MDHC: {
       code: "MDHC",
@@ -650,12 +600,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“그 부분은 제가 체크리스트에 미리 반영해 두었어요! 지금 생긴 변수만 같이 바로 정리하시죠.”",
       colleagueTip: "당연해 보이는 매끄러운 운영 뒤에 이 동료의 땀방울이 있습니다. 구체적인 감사 인사가 큰 힘이 됩니다.",
       bestMatch: "MDLR",
-      worstMatch: "SIHC",
-      recommendedArticles: [
-        { dept: "MICE·교육운영", title: "수백 명 규모의 행사·교육이 물 흐르듯 진행되는 운영 SOP의 기술" },
-        { dept: "협업·PMO", title: "여러 이해관계자의 일정을 하나로 묶어내는 커뮤니케이션 루틴" },
-        { dept: "AX·실무", title: "매일 반복되는 정산·취합 업무를 자동화해 칼퇴를 돕는 스마트 워크팁" }
-      ]
+      worstMatch: "SIHC"
     },
     MDHR: {
       code: "MDHR",
@@ -675,12 +620,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“작년과 재작년 자료를 비교해 두었는데요, 각 팀 의견까지 반영해서 정리본 공유해 드릴게요.”",
       colleagueTip: "갑작스러운 구두 요청보다는 메신저나 메일로 맥락과 기한을 적어 전달하면 가장 완벽한 결과물을 줍니다.",
       bestMatch: "MDLC",
-      worstMatch: "SIHR",
-      recommendedArticles: [
-        { dept: "지식관리·콘텐츠", title: "흩어진 사내 문서가 보물이 되는 아카이빙과 택소노미(분류) 설계법" },
-        { dept: "데이터·품질", title: "작은 오류가 큰 신뢰를 좌우한다: 고품질 리포트 검수 프로토콜" },
-        { dept: "조직심리", title: "조용하지만 강한 영향력: 신중한 실무자가 팀의 성과를 지탱하는 법" }
-      ]
+      worstMatch: "SIHR"
     },
     MILC: {
       code: "MILC",
@@ -700,12 +640,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“우리가 꾸준히 쌓아온 흐름이 있으니까요, 이번 변수는 정면으로 넘어서 한 단계 업그레이드합시다!”",
       colleagueTip: "단순 반복 업무를 맡길 때도 '이 일이 전체 비전에서 어떤 의미인지' 연결해 주면 눈빛이 달라집니다.",
       bestMatch: "MIHR",
-      worstMatch: "SDLC",
-      recommendedArticles: [
-        { dept: "전략·비전", title: "일상의 루틴이 혁신이 되기까지: 롱런하는 비즈니스 모델의 조건" },
-        { dept: "콘텐츠·기획", title: "단발성 히트를 넘어 지속 가능한 브랜드 시리즈를 만드는 법" },
-        { dept: "리더십", title: "방향성을 잃지 않으면서도 현장의 위기를 돌파하는 애자일 리더십" }
-      ]
+      worstMatch: "SDLC"
     },
     MILR: {
       code: "MILR",
@@ -725,12 +660,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“급할수록 돌아가라는 말이 있죠. 잠깐 숨 좀 고르고, 우리가 놓친 본질이 없는지부터 짚어봅시다.”",
       colleagueTip: "장기 기획이나 방향성 고민이 있을 때 찾아가 보세요. 시야를 넓혀주는 결정적인 힌트를 얻을 수 있습니다.",
       bestMatch: "MIHC",
-      worstMatch: "SDLR",
-      recommendedArticles: [
-        { dept: "교육·코칭", title: "답을 주는 리더에서 질문을 던지는 코치로: 성장을 이끄는 피드백 기술" },
-        { dept: "전략·인사이트", title: "속도전 시대에 더욱 빛나는 '슬로우 씽킹(Slow Thinking)' 의사결정" },
-        { dept: "조직문화", title: "연차와 직급을 넘어 신뢰로 연결되는 오피스 멘토링 가이드" }
-      ]
+      worstMatch: "SDLR"
     },
     MIHC: {
       code: "MIHC",
@@ -750,12 +680,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“두 분 말씀 다 일리가 있어요! 제가 가운데서 연결해 볼 테니 지금 바로 같이 뚫어보시죠!”",
       colleagueTip: "협업이 삐걱거리는 프로젝트가 있다면 이 동료와 상의해 보세요. 막힌 소통 혈을 뚫어줍니다.",
       bestMatch: "MILR",
-      worstMatch: "SDHC",
-      recommendedArticles: [
-        { dept: "협업·MICE", title: "다양한 파트너사를 하나의 원팀(One Team)으로 묶는 퍼실리테이션 기술" },
-        { dept: "콘텐츠·공감", title: "사람 냄새 나는 비즈니스 스토리텔링이 결국 고객을 움직인다" },
-        { dept: "리더십·케어", title: "착한 동료가 지치지 않고 성과를 내는 건강한 경계 설정법" }
-      ]
+      worstMatch: "SDHC"
     },
     MIHR: {
       code: "MIHR",
@@ -775,12 +700,7 @@ window.MKBIZ_DATA = {
       catchphrase: "“조금 천천히 가더라도 우리 팀이 지치지 않고 다 같이 웃으면서 끝낼 수 있으면 좋겠어요.”",
       colleagueTip: "회의 자리에서 즉답을 재촉하기보다 \"생각 정리되면 편하게 의견 주세요\"라고 배려해 주면 깊은 통찰을 들려줍니다.",
       bestMatch: "MILC",
-      worstMatch: "SDHR",
-      recommendedArticles: [
-        { dept: "콘텐츠·인문", title: "일상의 관찰에서 비즈니스 인사이트를 건져 올리는 기록의 힘" },
-        { dept: "조직문화", title: "조용한 몰입이 만드는 고성과: 내향형 인재가 빛나는 오피스 환경" },
-        { dept: "마인드풀니스", title: "바쁜 직장인을 위한 5분 리셋: 스트레스 상황에서의 감정 재정비 기술" }
-      ]
+      worstMatch: "SDHR"
     }
   },
 

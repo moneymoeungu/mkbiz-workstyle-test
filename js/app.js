@@ -1088,27 +1088,7 @@
         </div>
       </section>
 
-      <!-- 5. 유형별 매경비즈 추천 콘텐츠 -->
-      <section class="editorial-card">
-        <div class="section-header-bar">
-          <span class="section-num-tag">CURATION</span>
-          <h2 class="section-title">${escapeHtml(typeInfo.name)}에게 추천하는 아티클</h2>
-        </div>
-        <div class="detail-list">
-          ${(typeInfo.recommendedArticles || [])
-            .map(
-              (art) => `
-            <div class="detail-item" style="display:flex; flex-direction:column; gap:4px;">
-              <span style="font-size:11px; font-weight:800; color:var(--excel-green);">${escapeHtml(art.dept)}</span>
-              <span style="font-size:14px; font-weight:700; color:var(--ink-black);">${escapeHtml(art.title)}</span>
-            </div>
-          `
-            )
-            .join("")}
-        </div>
-      </section>
-
-      <!-- 6. AX TF 한 줄 만족도 설문 -->
+      <!-- 5. AX TF 한 줄 만족도 설문 -->
       <section class="editorial-card" id="surveySection">
         <div class="section-header-bar">
           <span class="section-num-tag">FEEDBACK</span>
@@ -1145,7 +1125,7 @@
         }
       </section>
 
-      <!-- 7. 전체 16유형 둘러보기 & 다시 하기 -->
+      <!-- 6. 전체 16유형 둘러보기 & 다시 하기 -->
       <div class="action-grid-2col">
         <button type="button" class="btn btn-secondary" id="btnOpenAllTypes">
           전체 16유형 시트 보기 (${getCollectedTypes().length}/16)
