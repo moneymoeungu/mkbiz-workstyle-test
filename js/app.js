@@ -439,7 +439,7 @@
           나의 <span class="highlight">직장인 유형</span>은?
         </h1>
         <p class="cover-subcopy">
-          정장 입은 호랑이 대리부터 커리어 블레이저를 입은 토끼 프로까지!<br />
+          정장 입은 호랑이 대리부터 커리어 블레이저를 입은 토끼 프로까지!<br class="pc-only-br" />
           15가지 현실 오피스 상황으로 나의 업무 유형과 찰떡 동료를 확인해 보세요.
         </p>
 
@@ -1356,37 +1356,37 @@
           </h1>
 
           <!-- 두 사람 동물 캐릭터 나란히 배치 -->
-          <div style="display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:10px; width:100%; margin-bottom:18px;">
-            <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+          <div class="pair-compare-grid">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; min-width:0;">
               <div style="border:1.5px solid var(--excel-cell-border); border-radius:6px; overflow:hidden; background:#F9FBF9;">
-                <canvas id="pairMyCanvas" class="pixel-canvas" width="192" height="192" style="width:96px; height:96px;"></canvas>
+                <canvas id="pairMyCanvas" class="pixel-canvas" width="192" height="192" style="width:92px; height:92px;"></canvas>
               </div>
               <span style="font-size:11.5px; color:var(--excel-green); font-weight:700; margin-top:6px;">${escapeHtml(pairData.myType.animal || "")}</span>
-              <strong style="font-size:14.5px; color:var(--ink-black); white-space:nowrap; margin-top:1px;">${escapeHtml(pairData.myType.name)}</strong>
-              <span style="font-size:11.5px; color:var(--ink-muted); white-space:nowrap;">${escapeHtml(pairData.myName)}</span>
+              <strong style="font-size:14px; color:var(--ink-black); margin-top:1px; line-height:1.25;">${escapeHtml(pairData.myType.name)}</strong>
+              <span style="font-size:11.5px; color:var(--ink-muted); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(pairData.myName)}</span>
             </div>
 
             <div style="display:flex; flex-direction:column; align-items:center;">
-              <div style="background:var(--excel-green-soft); border:1.5px solid var(--excel-green); border-radius:4px; padding:10px 12px; text-align:center; white-space:nowrap;">
-                <div style="font-size:22px; font-weight:900; color:var(--excel-green);">${pairData.score}점</div>
-                <div style="font-size:10.5px; font-weight:700; color:var(--ink-muted);">업무 시너지</div>
+              <div style="background:var(--excel-green-soft); border:1.5px solid var(--excel-green); border-radius:4px; padding:8px 10px; text-align:center; white-space:nowrap;">
+                <div style="font-size:20px; font-weight:900; color:var(--excel-green);">${pairData.score}점</div>
+                <div style="font-size:10px; font-weight:700; color:var(--ink-muted);">업무 시너지</div>
               </div>
             </div>
 
-            <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; min-width:0;">
               <div style="border:1.5px solid var(--excel-cell-border); border-radius:6px; overflow:hidden; background:#F9FBF9;">
-                <canvas id="pairPartnerCanvas" class="pixel-canvas" width="192" height="192" style="width:96px; height:96px;"></canvas>
+                <canvas id="pairPartnerCanvas" class="pixel-canvas" width="192" height="192" style="width:92px; height:92px;"></canvas>
               </div>
               <span style="font-size:11.5px; color:var(--excel-green); font-weight:700; margin-top:6px;">${escapeHtml(pairData.partnerType.animal || "")}</span>
-              <strong style="font-size:14.5px; color:var(--ink-black); white-space:nowrap; margin-top:1px;">${escapeHtml(pairData.partnerType.name)}</strong>
-              <span style="font-size:11.5px; color:var(--ink-muted); white-space:nowrap;">${escapeHtml(pairData.partnerName)}</span>
+              <strong style="font-size:14px; color:var(--ink-black); margin-top:1px; line-height:1.25;">${escapeHtml(pairData.partnerType.name)}</strong>
+              <span style="font-size:11.5px; color:var(--ink-muted); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(pairData.partnerName)}</span>
             </div>
           </div>
 
           <!-- 다른 동료 유형으로 즉시 바꿔보기 스위치 -->
           <div style="width:100%; background:var(--bg-paper); border:1px solid var(--excel-cell-border); border-radius:4px; padding:10px 12px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
             <span style="font-size:12.5px; font-weight:800; white-space:nowrap;">비교 대상 변경</span>
-            <select id="pairSwitchPartnerSelect" class="text-input" style="min-height:38px; padding:4px 8px; font-size:13px; width:auto; flex:1;">
+            <select id="pairSwitchPartnerSelect" class="text-input" style="min-height:38px; padding:4px 8px; font-size:13px; width:auto; flex:1; min-width:0;">
               ${Object.values(window.MKBIZ_DATA.types)
                 .map(
                   (t) =>
@@ -1408,8 +1408,8 @@
               .map(
                 (ac) => `
               <div class="detail-item" style="background:${ac.isGood ? "var(--excel-green-soft)" : "#FFFFFF"};">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; gap:8px;">
-                  <strong style="font-size:13.5px; white-space:nowrap;">${ac.axisName} · ${ac.myCode} × ${ac.partnerCode}</strong>
+                <div class="pair-axis-header">
+                  <strong style="font-size:13.5px;">${ac.axisName} · ${ac.myCode} × ${ac.partnerCode}</strong>
                   <span class="stamp-pill" style="font-size:11px; padding:2px 8px; background:${ac.isGood ? "var(--excel-green)" : "var(--ink-muted)"}; color:#fff; border:none;">${ac.tagText}</span>
                 </div>
                 <p style="font-size:13px; color:var(--ink-body);">${escapeHtml(ac.desc)}</p>
@@ -1664,7 +1664,7 @@
 
           <div style="background:var(--bg-paper); border:1px solid var(--excel-cell-border); border-radius:4px; padding:12px; margin-bottom:16px;">
             <div style="font-size:13px; font-weight:800; margin-bottom:8px;">=VLOOKUP 두 유형 즉석 궁합 계산기</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <div class="dex-matcher-selects">
               <select id="dexSelectA" class="text-input" style="min-height:38px; padding:4px 8px; font-size:12.5px;">
                 ${allTypes.map((t) => `<option value="${t.code}" ${t.code === defaultMy ? "selected" : ""}>나: ${t.name} (${t.animal || ""})</option>`).join("")}
               </select>
