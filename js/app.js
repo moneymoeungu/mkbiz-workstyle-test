@@ -39,6 +39,11 @@
       .replace(/'/g, "&#039;");
   }
 
+  function withNim(name, fallback = "익명") {
+    const raw = String(name || fallback).trim() || fallback;
+    return raw.endsWith("님") ? raw : `${raw}님`;
+  }
+
   function updateExcelFormulaBar(cellRef, formulaStr, activeSheetTab) {
     const refEl = document.getElementById("excelCellRef");
     const fxEl = document.getElementById("excelFormulaText");
@@ -388,19 +393,19 @@
     let inviteHtml = "";
     if (state.inviterType && window.MKBIZ_DATA.types[state.inviterType]) {
       const invType = window.MKBIZ_DATA.types[state.inviterType];
-      const invName = escapeHtml(state.inviterName || "동료");
+      const invHonorific = escapeHtml(withNim(state.inviterName, "동료"));
       inviteHtml = `
         <section class="invite-ticket" aria-label="궁합 초대장">
           <div class="invite-ticket-header">
             <span class="invite-ticket-badge">VLOOKUP 궁합 요청</span>
-            <span class="invite-ticket-title">${invName}님이 우리의 업무 궁합을 궁금해해요!</span>
+            <span class="invite-ticket-title">${invHonorific}이 우리의 업무 궁합을 궁금해해요!</span>
           </div>
           <p style="font-size:13px; color:var(--ink-muted);">
             초대한 동료의 유형: <strong style="color:var(--ink-black);">${invType.name} (${invType.animal || ""})</strong>
           </p>
           <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
             <button type="button" class="btn btn-secondary btn-sm" id="btnViewInviterResult" style="width:100%;">
-              ${invName}님의 '${invType.name}' 결과 사원증 먼저 보기 →
+              ${invHonorific}의 '${invType.name}' 결과 사원증 먼저 보기 →
             </button>
             ${
               lastResult && lastResult.resultType
@@ -919,7 +924,7 @@
         <div class="id-card-body">
           <p class="id-card-owner">${
             state.nickname
-              ? `${escapeHtml(state.nickname)}님의 직장인 성향 유형은`
+              ? `${escapeHtml(withNim(state.nickname))}의 직장인 성향 유형은`
               : "직장인 성향 진단 결과 유형은"
           }</p>
           <h1 class="id-card-typename">
@@ -1936,7 +1941,7 @@
       const upperR = resultShareParam.toUpperCase();
       if (window.MKBIZ_DATA.types[upperR]) {
         state.resultType = upperR;
-        state.nickname = nameParam ? nameParam.slice(0, 10) : "";
+        state.nickname = nameParam ? nameParam.slice(0, 10) : upperR === "SIHR" ? "안부장님" : "";
         if (scoresParam) {
           const parts = scoresParam.split(",").map((v) => Math.min(100, Math.max(50, Number(v) || 80)));
           if (parts.length === 4) {

@@ -62,6 +62,11 @@
     return lines.length;
   }
 
+  function withNim(name, fallback = "익명") {
+    const raw = String(name || fallback).trim() || fallback;
+    return raw.endsWith("님") ? raw : `${raw}님`;
+  }
+
   function renderResultCardCanvas(state, ratio = "1x1") {
     const isStory = ratio === "9x16";
     const W = 1080;
@@ -77,7 +82,7 @@
     const typeCode = state.resultType || "SDLC";
     const typeInfo = window.MKBIZ_DATA.types[typeCode];
     const ownerTitle = state.nickname
-      ? `${state.nickname}님의 직장인 성향 유형은`
+      ? `${withNim(state.nickname)}의 직장인 성향 유형은`
       : "직장인 성향 진단 결과 유형은";
     const avatarStyle = state.avatarStyle || "classic";
     const scores = state.axisScores || {
@@ -403,14 +408,14 @@
     ctx.fillStyle = "#6E6A63";
     ctx.font = `600 22px ${FONT_SANS}`;
     ctx.textAlign = "center";
-    ctx.fillText(`${pairData.myName}님`, cardX + 80 + charSize / 2, labelY);
+    ctx.fillText(withNim(pairData.myName, "나"), cardX + 80 + charSize / 2, labelY);
     ctx.fillStyle = "#141413";
     ctx.font = `800 26px ${FONT_SANS}`;
     ctx.fillText(pairData.myType.name, cardX + 80 + charSize / 2, labelY + 36);
 
     ctx.fillStyle = "#6E6A63";
     ctx.font = `600 22px ${FONT_SANS}`;
-    ctx.fillText(`${pairData.partnerName}님`, cardX + cardW - 80 - charSize / 2, labelY);
+    ctx.fillText(withNim(pairData.partnerName, "동료"), cardX + cardW - 80 - charSize / 2, labelY);
     ctx.fillStyle = "#141413";
     ctx.font = `800 26px ${FONT_SANS}`;
     ctx.fillText(pairData.partnerType.name, cardX + cardW - 80 - charSize / 2, labelY + 36);
