@@ -996,28 +996,30 @@
         </div>
 
         <div class="action-grid-2col" style="margin-bottom:10px;">
-          <button type="button" class="btn btn-secondary" id="btnDownload1x1" style="font-size:14px; padding:10px 12px; flex-direction:column; gap:2px;">
-            <span>1:1 사원증 저장</span>
-            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">메신저·피드 규격</span>
+          <button type="button" class="btn btn-primary" id="btnCopyBasicLink" style="font-size:14px; padding:10px 12px; flex-direction:column; gap:2px;">
+            <span>내 결과 사원증 링크 복사</span>
+            <span style="font-size:11px; color:#D5EBE0; font-weight:500;">열면 이 결과 화면이 바로 뜸</span>
           </button>
-          <button type="button" class="btn btn-secondary" id="btnDownload9x16" style="font-size:14px; padding:10px 12px; flex-direction:column; gap:2px;">
-            <span>9:16 스토리 저장</span>
-            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">스토리 규격 (궁합 포함)</span>
+          <button type="button" class="btn btn-secondary" id="btnWebShareSheet" style="font-size:14px; padding:10px 12px; flex-direction:column; gap:2px;">
+            <span>모바일로 결과 공유하기</span>
+            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">카톡·메시지로 내 결과 전송</span>
           </button>
         </div>
 
-        <button type="button" class="btn btn-primary" id="btnCreateInviteLink" style="margin-bottom:10px;">
-          동료와 업무 궁합 비교하기 (초대 링크 복사)
+        <div class="action-grid-2col" style="margin-bottom:10px;">
+          <button type="button" class="btn btn-subtle" id="btnDownload1x1" style="font-size:13.5px; padding:10px 12px; flex-direction:column; gap:2px;">
+            <span>1:1 사원증 이미지 저장</span>
+            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">메신저·피드 규격 PNG</span>
+          </button>
+          <button type="button" class="btn btn-subtle" id="btnDownload9x16" style="font-size:13.5px; padding:10px 12px; flex-direction:column; gap:2px;">
+            <span>9:16 스토리 이미지 저장</span>
+            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">인스타 스토리 규격 PNG</span>
+          </button>
+        </div>
+
+        <button type="button" class="btn btn-subtle" id="btnCreateInviteLink" style="width:100%;">
+          동료에게 궁합 비교 초대장 링크 복사
         </button>
-
-        <div class="action-grid-2col">
-          <button type="button" class="btn btn-subtle" id="btnWebShareSheet">
-            모바일 공유 시트 열기
-          </button>
-          <button type="button" class="btn btn-subtle" id="btnCopyBasicLink">
-            결과 링크만 복사
-          </button>
-        </div>
 
         <!-- 팀 단체방 복사용 멘트 박스 -->
         <div class="groupchat-copy-box">
@@ -1225,17 +1227,18 @@
 
     document.getElementById("btnWebShareSheet")?.addEventListener("click", async () => {
       window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "sheet" });
+      const resultUrl = buildShareResultUrl(typeCode, state.nickname, state.axisScores);
       const cvs = window.MKBIZ_EXPORTER.renderResultCardCanvas(state, "1x1");
       const filename = `mkbiz_${typeCode}_1x1.png`;
       const res = await window.MKBIZ_EXPORTER.shareCardViaWebShare(
         cvs,
         filename,
-        `[매경비즈] ${state.nickname}님의 직장 성향은 '${typeInfo.name}'`,
-        "우리 업무 궁합 몇 점인지 맞춰봐요!",
-        inviteUrl
+        `[매경비즈] ${withNim(state.nickname)}의 직장 성향은 '${typeInfo.name}'`,
+        `${withNim(state.nickname)}의 직장인 성향 결과 사원증을 확인해 보세요!`,
+        resultUrl
       );
       if (!res.shared && res.reason !== "aborted") {
-        copyTextToClipboard(inviteUrl, "초대 링크를 클립보드에 복사했습니다.");
+        copyTextToClipboard(resultUrl, "결과 사원증 링크를 클립보드에 복사했습니다.");
       }
     });
 
