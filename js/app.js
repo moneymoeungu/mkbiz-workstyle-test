@@ -1079,6 +1079,43 @@
             <p>${escapeHtml(typeInfo.colleagueTip)}</p>
           </div>
         </div>
+
+        ${
+          typeInfo.deepDive
+            ? `
+          <div class="deep-dive-wrap">
+            <button type="button" class="deep-dive-toggle-btn" id="btnToggleDeepDive" aria-expanded="false">
+              <span id="deepDiveBtnLabel">+ 상세 성향 리포트 펼쳐보기</span>
+              <span class="deep-dive-chevron" id="deepDiveChevron">▾</span>
+            </button>
+
+            <div class="deep-dive-panel" id="deepDivePanel" hidden>
+              <div class="deep-dive-overview">
+                <div class="deep-dive-subtitle">오피스 생태계 관찰 리포트</div>
+                <p>${escapeHtml(typeInfo.deepDive.overview)}</p>
+              </div>
+
+              <table class="excel-axis-table deep-dive-table" aria-label="상황별 오피스 반응 리포트">
+                <tbody>
+                  <tr>
+                    <th>실무 스타일</th>
+                    <td>${escapeHtml(typeInfo.deepDive.workStyle)}</td>
+                  </tr>
+                  <tr>
+                    <th>회의실 포지션</th>
+                    <td>${escapeHtml(typeInfo.deepDive.meetingStyle)}</td>
+                  </tr>
+                  <tr>
+                    <th style="color:var(--mk-rose);">방전 신호</th>
+                    <td>${escapeHtml(typeInfo.deepDive.burnoutSign)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `
+            : ""
+        }
       </section>
 
       <!-- 3. 찰떡 궁합 & 배울 점 많은 상극 -->
@@ -1257,6 +1294,28 @@
       window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "messenger" });
       const msg = getGroupChatCopyText(typeInfo, bestInfo, inviteUrl);
       copyTextToClipboard(msg, "동료 궁합 비교 초대장이 복사되었습니다. 메신저에 붙여넣어 보세요.");
+    });
+
+    document.getElementById("btnToggleDeepDive")?.addEventListener("click", () => {
+      const panel = document.getElementById("deepDivePanel");
+      const btn = document.getElementById("btnToggleDeepDive");
+      const label = document.getElementById("deepDiveBtnLabel");
+      const chevron = document.getElementById("deepDiveChevron");
+      if (!panel || !btn) return;
+      const isHidden = panel.hasAttribute("hidden");
+      if (isHidden) {
+        panel.removeAttribute("hidden");
+        btn.setAttribute("aria-expanded", "true");
+        btn.classList.add("open");
+        if (label) label.textContent = "− 상세 성향 리포트 접기";
+        if (chevron) chevron.textContent = "▴";
+      } else {
+        panel.setAttribute("hidden", "");
+        btn.setAttribute("aria-expanded", "false");
+        btn.classList.remove("open");
+        if (label) label.textContent = "+ 상세 성향 리포트 펼쳐보기";
+        if (chevron) chevron.textContent = "▾";
+      }
     });
 
     document.getElementById("cardBestMatch")?.addEventListener("click", () => {
@@ -1610,12 +1669,47 @@
             ${escapeHtml(t.catchphrase)}
           </div>
 
-          <div class="detail-list" style="margin-bottom:16px;">
+          <div class="detail-list" style="margin-bottom:12px;">
             <div class="detail-item"><strong>강점 1</strong> — ${escapeHtml(t.strengths[0])}</div>
             <div class="detail-item"><strong>강점 2</strong> — ${escapeHtml(t.strengths[1])}</div>
             <div class="detail-item"><strong>주의할 점</strong> — ${escapeHtml(t.caution)}</div>
             <div class="detail-item"><strong>협업 팁</strong> — ${escapeHtml(t.colleagueTip)}</div>
           </div>
+
+          ${
+            t.deepDive
+              ? `
+            <div class="deep-dive-wrap" style="margin-top:0; margin-bottom:14px;">
+              <button type="button" class="deep-dive-toggle-btn" id="btnModalToggleDeepDive" aria-expanded="false">
+                <span id="modalDeepDiveLabel">+ 상세 성향 리포트 펼쳐보기</span>
+                <span class="deep-dive-chevron" id="modalDeepDiveChevron">▾</span>
+              </button>
+              <div class="deep-dive-panel" id="modalDeepDivePanel" hidden>
+                <div class="deep-dive-overview">
+                  <div class="deep-dive-subtitle">오피스 생태계 관찰 리포트</div>
+                  <p>${escapeHtml(t.deepDive.overview)}</p>
+                </div>
+                <table class="excel-axis-table deep-dive-table">
+                  <tbody>
+                    <tr>
+                      <th>실무 스타일</th>
+                      <td>${escapeHtml(t.deepDive.workStyle)}</td>
+                    </tr>
+                    <tr>
+                      <th>회의실 포지션</th>
+                      <td>${escapeHtml(t.deepDive.meetingStyle)}</td>
+                    </tr>
+                    <tr>
+                      <th style="color:var(--mk-rose);">방전 신호</th>
+                      <td>${escapeHtml(t.deepDive.burnoutSign)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `
+              : ""
+          }
 
           <div class="action-grid-2col">
             <button type="button" class="btn btn-primary btn-sm" id="btnModalCompareWithMe">
@@ -1633,6 +1727,28 @@
     if (cvs) {
       window.MKBIZ_PIXEL.renderPixelCharacter(cvs, { typeCode: t.code, frame: 0, size: 220 });
     }
+
+    document.getElementById("btnModalToggleDeepDive")?.addEventListener("click", () => {
+      const panel = document.getElementById("modalDeepDivePanel");
+      const btn = document.getElementById("btnModalToggleDeepDive");
+      const label = document.getElementById("modalDeepDiveLabel");
+      const chevron = document.getElementById("modalDeepDiveChevron");
+      if (!panel || !btn) return;
+      const isHidden = panel.hasAttribute("hidden");
+      if (isHidden) {
+        panel.removeAttribute("hidden");
+        btn.setAttribute("aria-expanded", "true");
+        btn.classList.add("open");
+        if (label) label.textContent = "− 상세 성향 리포트 접기";
+        if (chevron) chevron.textContent = "▴";
+      } else {
+        panel.setAttribute("hidden", "");
+        btn.setAttribute("aria-expanded", "false");
+        btn.classList.remove("open");
+        if (label) label.textContent = "+ 상세 성향 리포트 펼쳐보기";
+        if (chevron) chevron.textContent = "▾";
+      }
+    });
 
     document.getElementById("btnCloseTypeModal")?.addEventListener("click", closeModal);
     document.getElementById("typeModalBackdrop")?.addEventListener("click", (e) => {
