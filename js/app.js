@@ -1120,44 +1120,7 @@
         </div>
       </section>
 
-      <!-- 5. AX TF 한 줄 만족도 설문 -->
-      <section class="editorial-card" id="surveySection">
-        <div class="section-header-bar">
-          <span class="section-num-tag">FEEDBACK</span>
-          <h2 class="section-title">이번 테스트는 어떠셨나요?</h2>
-        </div>
-        ${
-          state.surveySubmitted
-            ? `<p style="text-align:center; font-weight:700; color:var(--excel-green); padding:8px 0;">
-                 의견을 보내주셔서 감사합니다. 다음 AX TF 콘텐츠 기획에 반영하겠습니다.
-               </p>`
-            : `
-          <p style="font-size:12.5px; color:var(--ink-muted); text-align:center;">
-            익명으로 집계되며 매경비즈 AX TF의 후속 프로젝트 기획에 활용됩니다.
-          </p>
-          <div class="star-rating-row" role="radiogroup" aria-label="만족도 5점 척도">
-            ${[1, 2, 3, 4, 5]
-              .map(
-                (num) => `
-              <button type="button" class="star-btn ${state.surveyRating === num ? "active" : ""}" data-rating="${num}">
-                ${num}점
-              </button>
-            `
-              )
-              .join("")}
-          </div>
-          <label style="display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px; font-weight:600; margin:12px 0; cursor:pointer;">
-            <input type="checkbox" id="chkNextAxContent" ${state.surveyNextInterest ? "checked" : ""} style="width:16px; height:16px; accent-color:var(--excel-green);" />
-            <span>다음 AX TF 사내 콘텐츠도 참여해보고 싶습니다</span>
-          </label>
-          <button type="button" class="btn btn-subtle btn-sm" id="btnSubmitSurvey" style="width:100%;">
-            익명 의견 제출하기
-          </button>
-        `
-        }
-      </section>
-
-      <!-- 6. 전체 16유형 둘러보기 & 다시 하기 -->
+      <!-- 5. 전체 16유형 둘러보기 & 다시 하기 -->
       <div class="action-grid-2col">
         <button type="button" class="btn btn-secondary" id="btnOpenAllTypes">
           전체 16유형 시트 보기 (${getCollectedTypes().length}/16)
@@ -1302,28 +1265,6 @@
         source: "quick_selector"
       });
       renderScreen("pair");
-    });
-
-    stage.querySelectorAll("[data-rating]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.surveyRating = Number(btn.getAttribute("data-rating") || 5);
-        stage.querySelectorAll("[data-rating]").forEach((b) => {
-          const r = Number(b.getAttribute("data-rating"));
-          b.classList.toggle("active", r === state.surveyRating);
-        });
-      });
-    });
-
-    document.getElementById("btnSubmitSurvey")?.addEventListener("click", () => {
-      const chk = document.getElementById("chkNextAxContent");
-      state.surveyNextInterest = chk ? chk.checked : true;
-      state.surveySubmitted = true;
-      window.MKBIZ_ANALYTICS.trackEvent("survey_submit", {
-        rating: state.surveyRating,
-        next_ax_interest: state.surveyNextInterest
-      });
-      showToast("익명 만족도 의견이 제출되었습니다.");
-      renderResultScreen(stage);
     });
 
     document.getElementById("btnOpenAllTypes")?.addEventListener("click", () => {
