@@ -1743,7 +1743,6 @@
     if (!modalContainer) return;
 
     const stats = window.MKBIZ_ANALYTICS.getAggregateStats();
-    const logs = window.MKBIZ_ANALYTICS.getRecentLogs();
 
     const pct = (num, den) => (den > 0 ? Math.round((num / den) * 1000) / 10 : 0);
     const participationRate = pct(stats.testComplete, stats.totalOrgMembers);
@@ -1751,20 +1750,27 @@
     const saveShareRate = pct(stats.cardDownloadOrShareUsers, stats.testComplete);
     const inviteSendRate = pct(stats.inviteCreateUsers, stats.testComplete);
     const inviteConvRate = pct(stats.inviteConvertedCount, stats.inviteOpenCount);
-    const avgSatisfaction =
-      stats.surveyCount > 0 ? (stats.surveyScoreSum / stats.surveyCount).toFixed(2) : "0.00";
-    const nextInterestRate = pct(stats.surveyNextAgreeCount, stats.surveyCount);
+
+    let topTypeCode = "SDLC";
+    let topTypeCount = -1;
+    Object.entries(stats.typeCounts || {}).forEach(([code, cnt]) => {
+      if (cnt > topTypeCount) {
+        topTypeCount = cnt;
+        topTypeCode = code;
+      }
+    });
+    const topTypeInfo = window.MKBIZ_DATA.types[topTypeCode] || window.MKBIZ_DATA.types.SDLC;
 
     modalContainer.innerHTML = `
       <div class="modal-backdrop" id="axDashboardBackdrop">
         <div class="modal-sheet" style="max-width:460px;" role="dialog" aria-modal="true" aria-label="AX TF 익명 KPI 대시보드">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span class="stamp-pill accent">AX TF 익명 참여 지표 (.xlsx)</span>
+            <span class="stamp-pill accent">AX TF 익명 참여 통계 시트 (.xlsx)</span>
             <button type="button" class="masthead-btn" id="btnCloseAxModal">닫기</button>
           </div>
 
           <p style="font-size:12px; color:var(--ink-muted); margin-bottom:14px;">
-            실명·닉네임·소속 부서를 수집하지 않으며, 표본이 5명 미만인 유형 집계는 개인 식별 방지를 위해 마스킹(&lt;5) 처리됩니다.
+            실명·닉네임·소속 부서를 수집하지 않으며, 표본이 5명 미만인 유형 집계는 개인 식별 방지를 위해 마스킹(&lt; 5명) 처리됩니다.
           </p>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
@@ -1777,52 +1783,44 @@
               <div style="font-size:18px; font-weight:800; color:var(--excel-green);">${completionRate}% <span style="font-size:11px; font-weight:500; color:var(--ink-muted);">(${stats.testComplete}/${stats.testStart})</span></div>
             </div>
             <div class="detail-item">
-              <div style="font-size:11px; color:var(--ink-muted);">3. 저장·공유율 (목표 35%)</div>
+              <div style="font-size:11px; color:var(--ink-muted);">3. 결과 저장·공유율 (목표 35%)</div>
               <div style="font-size:18px; font-weight:800;">${saveShareRate}%</div>
             </div>
             <div class="detail-item">
-              <div style="font-size:11px; color:var(--ink-muted);">4. 초대 발송률 (목표 20%)</div>
+              <div style="font-size:11px; color:var(--ink-muted);">4. 궁합 초대 발송률 (목표 20%)</div>
               <div style="font-size:18px; font-weight:800;">${inviteSendRate}%</div>
             </div>
             <div class="detail-item">
-              <div style="font-size:11px; color:var(--ink-muted);">5. 초대 전환율 (목표 50%)</div>
+              <div style="font-size:11px; color:var(--ink-muted);">5. 궁합 초대 전환율 (목표 50%)</div>
               <div style="font-size:18px; font-weight:800;">${inviteConvRate}%</div>
             </div>
             <div class="detail-item">
-              <div style="font-size:11px; color:var(--ink-muted);">6·7. 만족도 / 후속관심</div>
-              <div style="font-size:16px; font-weight:800; color:var(--ink-black);">${avgSatisfaction}점 / ${nextInterestRate}%</div>
+              <div style="font-size:11px; color:var(--ink-muted);">6. 최다 등장 유형</div>
+              <div style="font-size:14.5px; font-weight:800; color:var(--excel-green-dark); margin-top:2px;">${escapeHtml(topTypeInfo.name)}</div>
             </div>
           </div>
 
-          <div style="background:var(--bg-paper); border:1px solid var(--excel-cell-border); border-radius:4px; padding:12px; margin-bottom:14px;">
-            <div style="font-size:12px; font-weight:800; margin-bottom:8px;">16유형 익명 분포 (5명 미만 표본 보호)</div>
-            <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:6px; font-size:11.5px;">
+          <div style="background:var(--bg-paper); border:1px solid var(--excel-cell-border); border-radius:4px; padding:12px;">
+            <div style="font-size:12.5px; font-weight:800; margin-bottom:8px;">16유형 익명 분포 시트 (5명 미만 표본 보호)</div>
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:6px; font-size:12px;">
               ${Object.entries(stats.typeCounts)
                 .map(([code, cnt]) => {
                   const masked = cnt < 5;
-                  const tName = window.MKBIZ_DATA.types[code]?.name || code;
+                  const tInfo = window.MKBIZ_DATA.types[code];
+                  const tName = tInfo?.name || code;
+                  const tAnimal = tInfo?.animal || "";
                   return `
-                  <div style="border:1px solid var(--excel-cell-border); border-radius:3px; padding:5px 4px; text-align:center; background:#FFFFFF;">
-                    <div style="font-weight:700; font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${tName}</div>
-                    <div style="color:${masked ? "var(--ink-faint)" : "var(--ink-black)"}; font-weight:600; font-size:11px;">${masked ? "< 5명" : cnt + "명"}</div>
+                  <div style="border:1px solid var(--excel-cell-border); border-radius:3px; padding:7px 9px; display:flex; justify-content:space-between; align-items:center; gap:6px; background:#FFFFFF;">
+                    <div style="min-width:0;">
+                      <div style="font-weight:800; font-size:12px; color:var(--ink-black);">${escapeHtml(tName)}</div>
+                      <div style="font-size:10.5px; color:var(--ink-muted);">${escapeHtml(tAnimal)}</div>
+                    </div>
+                    <div style="color:${masked ? "var(--ink-faint)" : "var(--excel-green)"}; font-weight:800; font-size:12px; white-space:nowrap;">${masked ? "< 5명" : cnt + "명"}</div>
                   </div>
                 `;
                 })
                 .join("")}
             </div>
-          </div>
-
-          <div style="background:#141E18; color:#E4E4E7; border-radius:4px; padding:12px; font-size:11px; max-height:140px; overflow-y:auto;">
-            <div style="color:#A7D4B8; font-weight:700; margin-bottom:6px;">익명 이벤트 수집 로그 (최근 ${logs.length}건, 식별정보 미포함)</div>
-            ${logs
-              .slice(0, 12)
-              .map(
-                (l) =>
-                  `<div style="margin-bottom:4px; border-bottom:1px solid #27382D; padding-bottom:3px;">
-                    <span style="color:#4ADE80; font-weight:700;">[${l.event}]</span> ${escapeHtml(JSON.stringify(l.properties))}
-                  </div>`
-              )
-              .join("")}
           </div>
         </div>
       </div>

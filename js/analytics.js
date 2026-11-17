@@ -30,7 +30,7 @@
    */
   function getAggregateStats() {
     const defaultStats = {
-      totalOrgMembers: 120, // 기본 가정 전사 인원 (대시보드에서 변경 가능)
+      totalOrgMembers: 120,
       pageViewStart: 68,
       testStart: 62,
       testComplete: 52,
@@ -38,12 +38,9 @@
       inviteCreateUsers: 14,
       inviteOpenCount: 18,
       inviteConvertedCount: 10,
-      surveyCount: 31,
-      surveyScoreSum: 138, // 평균 4.45
-      surveyNextAgreeCount: 24, // 77.4%
       typeCounts: {
         SDLC: 6, SDLR: 5, SDHC: 6, SDHR: 5,
-        SILC: 3, SILR: 2, SIHC: 5, SIHR: 2,
+        SILC: 3, SILR: 2, SIHC: 5, SIHR: 5,
         MDLC: 5, MDLR: 3, MDHC: 5, MDHR: 1,
         MILC: 1, MILR: 1, MIHC: 1, MIHR: 1
       }
@@ -126,13 +123,6 @@
       case "pair_view":
         if (safeProps.source === "invite_complete") {
           stats.inviteConvertedCount += 1;
-        }
-        break;
-      case "survey_submit":
-        stats.surveyCount += 1;
-        stats.surveyScoreSum += Number(safeProps.rating || 5);
-        if (safeProps.next_ax_interest) {
-          stats.surveyNextAgreeCount += 1;
         }
         break;
     }
