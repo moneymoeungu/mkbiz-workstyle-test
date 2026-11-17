@@ -889,18 +889,28 @@
     return `[매경비즈 직장인 성향 테스트]\n${nick}의 직장인 성향은 '${typeInfo.name} (${typeInfo.animal || ""})'!\n나랑 100점 찰떡 파트너는 '${bestTypeInfo.name}'이라는데 우리 팀에 누구 계신가요?\n아래 링크에서 3분 만에 확인해 보세요!\n${inviteUrl}`;
   }
 
+  function getAppRootUrl() {
+    const cleanPath = window.location.pathname
+      .replace(/\/index\.html$/, "")
+      .replace(/\/r\/[A-Za-z]+\/?$/, "")
+      .replace(/\/+$/, "");
+    return `${window.location.origin}${cleanPath}`;
+  }
+
   function buildInviteUrl(typeCode, nickname) {
-    const base = window.location.origin + window.location.pathname;
+    const code = (typeCode || "SDLC").toUpperCase();
+    const base = `${getAppRootUrl()}/r/${code}/`;
     const params = new URLSearchParams();
-    params.set("inviter", typeCode);
+    params.set("inviter", code);
     if (nickname) params.set("name", nickname);
     return `${base}?${params.toString()}`;
   }
 
   function buildShareResultUrl(typeCode, nickname, axisScores) {
-    const base = window.location.origin + window.location.pathname;
+    const code = (typeCode || "SDLC").toUpperCase();
+    const base = `${getAppRootUrl()}/r/${code}/`;
     const params = new URLSearchParams();
-    params.set("r", typeCode);
+    params.set("r", code);
     if (nickname) params.set("name", nickname);
     if (axisScores && axisScores.tempo && axisScores.decision && axisScores.collab && axisScores.crisis) {
       params.set(
@@ -1492,8 +1502,9 @@
     });
 
     document.getElementById("btnReplyToInviter")?.addEventListener("click", () => {
-      const replyUrl = `${window.location.origin}${window.location.pathname}?inviter=${encodeURIComponent(
-        pairData.myType.code
+      const code = pairData.myType.code;
+      const replyUrl = `${getAppRootUrl()}/r/${code}/?inviter=${encodeURIComponent(
+        code
       )}&name=${encodeURIComponent(pairData.myName)}&partner=${encodeURIComponent(pairData.partnerType.code)}`;
       const msg = `[매경비즈 직장인 성향 궁합]\n${pairData.myName}(${pairData.myType.name}) × ${pairData.partnerName}(${pairData.partnerType.name}) 우리의 업무 궁합은 [${pairData.score}점 · ${
         pairData.gradeInfo.badge.split("·")[1].trim()
