@@ -494,10 +494,6 @@
               autocomplete="off"
             />
             <div id="nicknameError" class="input-error" role="alert"></div>
-
-            <div class="excel-type-notice">
-              <span>결과 유형에 맞춰 <strong>16종 동물 캐릭터와 정장·안경·업무 소품</strong>이 자동 배정됩니다.</span>
-            </div>
           </div>
         </div>
 

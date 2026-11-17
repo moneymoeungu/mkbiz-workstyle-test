@@ -556,7 +556,10 @@ h1, h2, h3, h4, p, span, div, button, label, li, strong, td, th {
   font-size: 12.5px;
   font-weight: 700;
   color: var(--mk-rose);
-  min-height: 18px;
+}
+
+.input-error:empty {
+  display: none;
 }
 
 .excel-type-notice {
