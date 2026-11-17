@@ -334,15 +334,13 @@
   function startPixelAnimation(drawCallback) {
     stopPixelAnimation();
     state.animFrame = 0;
-    drawCallback(0);
-
-    const prefersReducedMotion =
-      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+    let tick = 0;
+    drawCallback(0, tick);
 
     state.animTimer = setInterval(() => {
+      tick += 1;
       state.animFrame = state.animFrame === 0 ? 1 : 0;
-      drawCallback(state.animFrame);
+      drawCallback(state.animFrame, tick);
     }, 850);
   }
 
@@ -453,28 +451,28 @@
           15가지 현실 오피스 상황으로 나의 업무 유형과 찰떡 동료를 확인해 보세요.
         </p>
 
-        <!-- 엑셀 표 스타일 대표 유형 쇼케이스 (유형별 맞춤 동물 & 오피스 착장 미리보기) -->
+        <!-- 엑셀 표 스타일 대표 유형 쇼케이스 (16종 동물 & 오피스 착장 자동 순환 미리보기) -->
         <div class="cover-stage-box">
           <div class="excel-table-header-row">
-            <div>A열 : 돌파형 리더</div>
-            <div>B열 : 아이디어 개척</div>
-            <div>C열 : 정밀 검증</div>
+            <div id="coverColHead1">A열 : 돌파형 리더</div>
+            <div id="coverColHead2">B열 : 아이디어 개척</div>
+            <div id="coverColHead3">C열 : 정밀 검증</div>
           </div>
-          <div class="cover-char-row">
-            <div class="cover-char-card">
+          <div class="cover-char-row" id="coverCharRow">
+            <div class="cover-char-card" id="coverCard1" role="button" tabindex="0" title="클릭하여 유형 상세 보기">
               <canvas id="coverChar1" class="pixel-canvas" width="200" height="200" aria-label="마감 불도저 호랑이 캐릭터"></canvas>
-              <span class="cover-char-code">호랑이 대리 · 정장&타이</span>
-              <span class="cover-char-label">마감 불도저</span>
+              <span class="cover-char-code" id="coverCharCode1">호랑이 대리 · 정장&타이</span>
+              <span class="cover-char-label" id="coverCharLabel1">마감 불도저</span>
             </div>
-            <div class="cover-char-card">
+            <div class="cover-char-card" id="coverCard2" role="button" tabindex="0" title="클릭하여 유형 상세 보기">
               <canvas id="coverChar2" class="pixel-canvas" width="200" height="200" aria-label="기획 로켓 토끼 캐릭터"></canvas>
-              <span class="cover-char-code">토끼 프로 · 커리어 안경</span>
-              <span class="cover-char-label">기획 로켓</span>
+              <span class="cover-char-code" id="coverCharCode2">토끼 프로 · 커리어 안경</span>
+              <span class="cover-char-label" id="coverCharLabel2">기획 로켓</span>
             </div>
-            <div class="cover-char-card">
+            <div class="cover-char-card" id="coverCard3" role="button" tabindex="0" title="클릭하여 유형 상세 보기">
               <canvas id="coverChar3" class="pixel-canvas" width="200" height="200" aria-label="번개 팩트체커 판다 캐릭터"></canvas>
-              <span class="cover-char-code">판다 선임 · 데이터 검증</span>
-              <span class="cover-char-label">번개 팩트체커</span>
+              <span class="cover-char-code" id="coverCharCode3">판다 선임 · 데이터 검증</span>
+              <span class="cover-char-label" id="coverCharLabel3">번개 팩트체커</span>
             </div>
           </div>
         </div>
@@ -536,14 +534,77 @@
       </section>
     `;
 
-    // 상단 쇼케이스 3종 동물 캐릭터 애니메이션 (호랑이 SDLC, 토끼 SILC, 판다 SDHR)
-    startPixelAnimation((frame) => {
-      const c1 = document.getElementById("coverChar1");
-      const c2 = document.getElementById("coverChar2");
-      const c3 = document.getElementById("coverChar3");
-      if (c1) window.MKBIZ_PIXEL.renderPixelCharacter(c1, { typeCode: "SDLC", frame, size: 220 });
-      if (c2) window.MKBIZ_PIXEL.renderPixelCharacter(c2, { typeCode: "SILC", frame: frame === 0 ? 1 : 0, size: 220 });
-      if (c3) window.MKBIZ_PIXEL.renderPixelCharacter(c3, { typeCode: "SDHR", frame, size: 220 });
+    // 상단 쇼케이스 16종 직장인 동물 캐릭터 자동 순환 애니메이션
+    const showcaseRoster = [
+      { code: "SDLC", colRole: "돌파형 리더", shortDesc: "호랑이 대리 · 정장&타이", name: "마감 불도저" },
+      { code: "SILC", colRole: "아이디어 개척", shortDesc: "토끼 프로 · 커리어 안경", name: "기획 로켓" },
+      { code: "SDHR", colRole: "정밀 검증", shortDesc: "판다 선임 · 데이터 검증", name: "번개 팩트체커" },
+      { code: "SDLR", colRole: "냉철한 승부사", shortDesc: "사자 팀장 · 금테 안경", name: "특종 스나이퍼" },
+      { code: "SIHR", colRole: "공감 큐레이션", shortDesc: "양 큐레이터 · 포근 가디건", name: "감성 큐레이터" },
+      { code: "MDLC", colRole: "정석 아키텍트", shortDesc: "곰돌이 과장 · 뿔테 안경", name: "커리큘럼 설계자" },
+      { code: "SILR", colRole: "큰그림 연출가", shortDesc: "사슴 디렉터 · 모던 재킷", name: "헤드라인 디렉터" },
+      { code: "SDHC", colRole: "실전 에이스", shortDesc: "강아지 주임 · 니트 베스트", name: "현장 해결사" },
+      { code: "MDLR", colRole: "데이터 사령탑", shortDesc: "고양이 실장 · 시크 정장", name: "전략 체스 마스터" },
+      { code: "SIHC", colRole: "현장 텐션업", shortDesc: "원숭이 매니저 · 마이크", name: "분위기 MC" },
+      { code: "MDHC", colRole: "든든한 살림꾼", shortDesc: "펭귄 매니저 · 그린 타이", name: "꾸준한 운영 장인" },
+      { code: "MILR", colRole: "통찰력 멘토", shortDesc: "여우 수석 · 트렌치 재킷", name: "따뜻한 멘토" },
+      { code: "MILC", colRole: "큰그림 항해사", shortDesc: "꼬꼬 디렉터 · 비전 플래그", name: "비전 내비게이터" },
+      { code: "MIHC", colRole: "팀워크 발전소", shortDesc: "아기돼지 주임 · 리본 타이", name: "팀 케미 메이커" },
+      { code: "MDHR", colRole: "무결점 기록가", shortDesc: "개구리 연구원 · 스마트 안경", name: "정밀 아키비스트" },
+      { code: "MIHR", colRole: "오피스 오아시스", shortDesc: "병아리 사원 · 힐링 티컵", name: "마이페이스 힐러" }
+    ];
+
+    let showcaseOffset = 0;
+    let currentTriplet = [showcaseRoster[0], showcaseRoster[1], showcaseRoster[2]];
+
+    const updateShowcaseDOM = (triplet, frame, animateSwitch) => {
+      const rowEl = document.getElementById("coverCharRow");
+      if (animateSwitch && rowEl) {
+        rowEl.classList.remove("showcase-fade");
+        void rowEl.offsetWidth;
+        rowEl.classList.add("showcase-fade");
+      }
+
+      const colLetters = ["A열", "B열", "C열"];
+      triplet.forEach((item, i) => {
+        const idx = i + 1;
+        const headEl = document.getElementById(`coverColHead${idx}`);
+        const codeEl = document.getElementById(`coverCharCode${idx}`);
+        const labelEl = document.getElementById(`coverCharLabel${idx}`);
+        const canvasEl = document.getElementById(`coverChar${idx}`);
+
+        if (headEl) headEl.textContent = `${colLetters[i]} : ${item.colRole}`;
+        if (codeEl) codeEl.textContent = item.shortDesc;
+        if (labelEl) labelEl.textContent = item.name;
+        if (canvasEl) {
+          canvasEl.setAttribute("aria-label", `${item.name} 캐릭터`);
+          window.MKBIZ_PIXEL.renderPixelCharacter(canvasEl, {
+            typeCode: item.code,
+            frame: i === 1 ? (frame === 0 ? 1 : 0) : frame,
+            size: 220
+          });
+        }
+      });
+    };
+
+    startPixelAnimation((frame, tick = 0) => {
+      const shouldRotate = tick > 0 && tick % 3 === 0;
+      if (shouldRotate) {
+        showcaseOffset = (showcaseOffset + 3) % showcaseRoster.length;
+        currentTriplet = [
+          showcaseRoster[showcaseOffset % showcaseRoster.length],
+          showcaseRoster[(showcaseOffset + 1) % showcaseRoster.length],
+          showcaseRoster[(showcaseOffset + 2) % showcaseRoster.length]
+        ];
+      }
+      updateShowcaseDOM(currentTriplet, frame, shouldRotate);
+    });
+
+    [1, 2, 3].forEach((idx, i) => {
+      document.getElementById(`coverCard${idx}`)?.addEventListener("click", () => {
+        const item = currentTriplet[i];
+        if (item && item.code) openTypeDetailModal(item.code);
+      });
     });
 
     const inputEl = document.getElementById("nicknameInput");

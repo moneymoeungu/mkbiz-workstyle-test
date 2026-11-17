@@ -440,6 +440,21 @@ h1, h2, h3, h4, p, span, div, button, label, li, strong, td, th {
   grid-template-columns: repeat(3, 1fr);
 }
 
+@keyframes showcaseSlideFade {
+  0% {
+    opacity: 0.35;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cover-char-row.showcase-fade {
+  animation: showcaseSlideFade 0.36s ease-out;
+}
+
 .cover-char-card {
   background-color: #FFFFFF;
   border-right: 1px solid var(--excel-cell-border);
@@ -448,6 +463,12 @@ h1, h2, h3, h4, p, span, div, button, label, li, strong, td, th {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.cover-char-card:hover {
+  background-color: #F6FBF8;
 }
 
 .cover-char-card:last-child {
