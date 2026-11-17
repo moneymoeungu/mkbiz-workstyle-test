@@ -398,13 +398,18 @@
           <p style="font-size:13px; color:var(--ink-muted);">
             초대한 동료의 유형: <strong style="color:var(--ink-black);">${invType.name} (${invType.animal || ""})</strong>
           </p>
-          ${
-            lastResult && lastResult.resultType
-              ? `<button type="button" class="btn btn-subtle btn-sm" id="btnInstantInviteCompare" style="width:100%; margin-top:4px;">
-                   내 지난 결과(${escapeHtml(lastResult.nickname)} · ${window.MKBIZ_DATA.types[lastResult.resultType]?.name || ""})로 1초 만에 궁합 보기
-                 </button>`
-              : ""
-          }
+          <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnViewInviterResult" style="width:100%;">
+              ${invName}님의 '${invType.name}' 결과 사원증 먼저 보기 →
+            </button>
+            ${
+              lastResult && lastResult.resultType
+                ? `<button type="button" class="btn btn-subtle btn-sm" id="btnInstantInviteCompare" style="width:100%;">
+                     내 지난 결과(${escapeHtml(lastResult.nickname)} · ${window.MKBIZ_DATA.types[lastResult.resultType]?.name || ""})로 1초 만에 궁합 보기
+                   </button>`
+                : ""
+            }
+          </div>
         </section>
       `;
     }
@@ -589,6 +594,15 @@
       state.nickname = lastResult.nickname;
       state.resultType = lastResult.resultType;
       state.axisScores = lastResult.axisScores;
+      renderScreen("result");
+    });
+
+    document.getElementById("btnViewInviterResult")?.addEventListener("click", () => {
+      if (!state.inviterType) return;
+      state.resultType = state.inviterType;
+      state.nickname =
+        state.inviterName && !state.inviterName.endsWith("동료") ? state.inviterName : "";
+      state.axisScores = null;
       renderScreen("result");
     });
 
@@ -823,10 +837,17 @@
     return `${base}?${params.toString()}`;
   }
 
-  function buildShareResultUrl(typeCode) {
+  function buildShareResultUrl(typeCode, nickname, axisScores) {
     const base = window.location.origin + window.location.pathname;
     const params = new URLSearchParams();
     params.set("r", typeCode);
+    if (nickname) params.set("name", nickname);
+    if (axisScores && axisScores.tempo && axisScores.decision && axisScores.collab && axisScores.crisis) {
+      params.set(
+        "s",
+        `${axisScores.tempo.pct},${axisScores.decision.pct},${axisScores.collab.pct},${axisScores.crisis.pct}`
+      );
+    }
     return `${base}?${params.toString()}`;
   }
 
@@ -896,7 +917,11 @@
         </div>
 
         <div class="id-card-body">
-          <p class="id-card-owner">${escapeHtml(state.nickname || "익명")}님의 직장인 성향 유형은</p>
+          <p class="id-card-owner">${
+            state.nickname
+              ? `${escapeHtml(state.nickname)}님의 직장인 성향 유형은`
+              : "직장인 성향 진단 결과 유형은"
+          }</p>
           <h1 class="id-card-typename">
             <span>${escapeHtml(typeInfo.name)}</span>
           </h1>
@@ -1211,8 +1236,8 @@
 
     document.getElementById("btnCopyBasicLink")?.addEventListener("click", () => {
       window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "link" });
-      const cleanUrl = buildShareResultUrl(typeCode);
-      copyTextToClipboard(cleanUrl, "결과 링크가 클립보드에 복사되었습니다.");
+      const cleanUrl = buildShareResultUrl(typeCode, state.nickname, state.axisScores);
+      copyTextToClipboard(cleanUrl, "결과 사원증 링크가 복사되었습니다. 이 링크를 열면 내 결과가 바로 표시됩니다.");
     });
 
     stage.querySelectorAll("[data-tone]").forEach((btn) => {
@@ -1840,52 +1865,6 @@
   function initApp() {
     updateDexBadgeCount();
 
-    const params = new URLSearchParams(window.location.search);
-    const inviterParam = params.get("inviter");
-    const nameParam = params.get("name");
-    const partnerParam = params.get("partner");
-    const resultShareParam = params.get("r");
-
-    if (inviterParam) {
-      const upper = inviterParam.toUpperCase();
-      if (window.MKBIZ_DATA.types[upper]) {
-        state.inviterType = upper;
-        state.inviterName = (nameParam || "동료").slice(0, 10);
-        addCollectedType(upper);
-
-        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "invite" });
-        window.MKBIZ_ANALYTICS.trackEvent("invite_open", { inviter_type: upper });
-
-        if (partnerParam && window.MKBIZ_DATA.types[partnerParam.toUpperCase()]) {
-          const pUpper = partnerParam.toUpperCase();
-          state.resultType = pUpper;
-          state.nickname = "나";
-          state.pairPartnerType = upper;
-          state.pairPartnerName = state.inviterName;
-          renderScreen("pair");
-          return;
-        }
-      } else {
-        window.history.replaceState({}, document.title, window.location.pathname);
-        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "direct_invalid_param" });
-        setTimeout(() => {
-          showToast("유효하지 않은 링크여서 처음 화면으로 이동했습니다.");
-        }, 300);
-      }
-    } else if (resultShareParam) {
-      const upperR = resultShareParam.toUpperCase();
-      if (window.MKBIZ_DATA.types[upperR]) {
-        state.inviterType = upperR;
-        state.inviterName = `${window.MKBIZ_DATA.types[upperR].name} 동료`;
-        addCollectedType(upperR);
-        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "shared_result" });
-      } else {
-        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "direct" });
-      }
-    } else {
-      window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "direct" });
-    }
-
     document.getElementById("brandHomeBtn")?.addEventListener("click", () => {
       renderScreen("cover");
     });
@@ -1919,6 +1898,66 @@
     document.getElementById("tabSheetStats")?.addEventListener("click", () => {
       openAxTfDashboardModal();
     });
+
+    const params = new URLSearchParams(window.location.search);
+    const inviterParam = params.get("inviter");
+    const nameParam = params.get("name");
+    const partnerParam = params.get("partner");
+    const resultShareParam = params.get("r");
+    const scoresParam = params.get("s");
+
+    if (inviterParam) {
+      const upper = inviterParam.toUpperCase();
+      if (window.MKBIZ_DATA.types[upper]) {
+        state.inviterType = upper;
+        state.inviterName = (nameParam || "동료").slice(0, 10);
+        addCollectedType(upper);
+
+        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "invite" });
+        window.MKBIZ_ANALYTICS.trackEvent("invite_open", { inviter_type: upper });
+
+        if (partnerParam && window.MKBIZ_DATA.types[partnerParam.toUpperCase()]) {
+          const pUpper = partnerParam.toUpperCase();
+          state.resultType = pUpper;
+          state.nickname = "나";
+          state.pairPartnerType = upper;
+          state.pairPartnerName = state.inviterName;
+          renderScreen("pair");
+          return;
+        }
+      } else {
+        window.history.replaceState({}, document.title, window.location.pathname);
+        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "direct_invalid_param" });
+        setTimeout(() => {
+          showToast("유효하지 않은 링크여서 처음 화면으로 이동했습니다.");
+        }, 300);
+      }
+    } else if (resultShareParam) {
+      const upperR = resultShareParam.toUpperCase();
+      if (window.MKBIZ_DATA.types[upperR]) {
+        state.resultType = upperR;
+        state.nickname = nameParam ? nameParam.slice(0, 10) : "";
+        if (scoresParam) {
+          const parts = scoresParam.split(",").map((v) => Math.min(100, Math.max(50, Number(v) || 80)));
+          if (parts.length === 4) {
+            state.axisScores = {
+              tempo: { winner: upperR[0], pct: parts[0] },
+              decision: { winner: upperR[1], pct: parts[1] },
+              collab: { winner: upperR[2], pct: parts[2] },
+              crisis: { winner: upperR[3], pct: parts[3] }
+            };
+          }
+        }
+        addCollectedType(upperR);
+        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "shared_result" });
+        renderScreen("result");
+        return;
+      } else {
+        window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "direct" });
+      }
+    } else {
+      window.MKBIZ_ANALYTICS.trackEvent("page_view_start", { source: "direct" });
+    }
 
     renderScreen("cover");
   }

@@ -76,7 +76,9 @@
 
     const typeCode = state.resultType || "SDLC";
     const typeInfo = window.MKBIZ_DATA.types[typeCode];
-    const nickname = state.nickname || "익명";
+    const ownerTitle = state.nickname
+      ? `${state.nickname}님의 직장인 성향 유형은`
+      : "직장인 성향 진단 결과 유형은";
     const avatarStyle = state.avatarStyle || "classic";
     const scores = state.axisScores || {
       tempo: { winner: typeCode[0], pct: 80 },
@@ -117,7 +119,7 @@
       ctx.fillStyle = "#5C6B61";
       ctx.font = `600 24px ${FONT_SANS}`;
       ctx.textAlign = "left";
-      ctx.fillText(`${nickname}님의 직장인 성향 유형은`, cardX + 48, contentTop + 12);
+      ctx.fillText(ownerTitle, cardX + 48, contentTop + 12);
 
       ctx.fillStyle = "#161E19";
       ctx.font = `800 50px ${FONT_SANS}`;
@@ -174,7 +176,7 @@
       ctx.fillStyle = "#6E6A63";
       ctx.font = `600 28px ${FONT_SANS}`;
       ctx.textAlign = "center";
-      ctx.fillText(`${nickname}님의 직장인 성향 유형은`, W / 2, curY);
+      ctx.fillText(ownerTitle, W / 2, curY);
 
       curY += 56;
       ctx.fillStyle = "#141413";
