@@ -884,14 +884,8 @@
     }, 950);
   }
 
-  function getGroupChatCopyText(typeInfo, bestTypeInfo, inviteUrl, tone = "casual") {
-    const nick = state.nickname || "저";
-    if (tone === "leader") {
-      return `[매경비즈 직장인 성향 테스트]\n저는 '${typeInfo.name} (${typeInfo.animal || ""})' 유형이 나왔네요.\n"${typeInfo.summary}"\n우리 팀원분들은 어떤 업무 유형인지 가볍게 테스트해 보시고 궁합도 맞춰보세요!\n${inviteUrl}`;
-    }
-    if (tone === "newbie") {
-      return `[매경비즈 직장인 성향 테스트]\n안녕하세요! 테스트 결과 저는 '${typeInfo.name}' 유형이 나왔습니다.\n선배님·동료분들과의 업무 궁합이 궁금한데 시간 되실 때 한번 확인해 보세요!\n${inviteUrl}`;
-    }
+  function getGroupChatCopyText(typeInfo, bestTypeInfo, inviteUrl) {
+    const nick = state.nickname ? withNim(state.nickname) : "저";
     return `[매경비즈 직장인 성향 테스트]\n${nick}의 직장인 성향은 '${typeInfo.name} (${typeInfo.animal || ""})'!\n나랑 100점 찰떡 파트너는 '${bestTypeInfo.name}'이라는데 우리 팀에 누구 계신가요?\n아래 링크에서 3분 만에 확인해 보세요!\n${inviteUrl}`;
   }
 
@@ -1049,59 +1043,7 @@
         </div>
       </article>
 
-      <!-- 2. 이미지 저장 & 공유 & 동료 궁합 초대 -->
-      <section class="editorial-card">
-        <div class="section-header-bar">
-          <span class="section-num-tag">EXPORT</span>
-          <h2 class="section-title">사원증 이미지 저장 & 동료 궁합 초대</h2>
-        </div>
-
-        <div class="action-grid-2col" style="margin-bottom:10px;">
-          <button type="button" class="btn btn-primary" id="btnCopyBasicLink" style="font-size:14px; padding:10px 12px; flex-direction:column; gap:2px;">
-            <span>내 결과 사원증 링크 복사</span>
-            <span style="font-size:11px; color:#D5EBE0; font-weight:500;">열면 이 결과 화면이 바로 뜸</span>
-          </button>
-          <button type="button" class="btn btn-secondary" id="btnWebShareSheet" style="font-size:14px; padding:10px 12px; flex-direction:column; gap:2px;">
-            <span>모바일로 결과 공유하기</span>
-            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">카톡·메시지로 내 결과 전송</span>
-          </button>
-        </div>
-
-        <div class="action-grid-2col" style="margin-bottom:10px;">
-          <button type="button" class="btn btn-subtle" id="btnDownload1x1" style="font-size:13.5px; padding:10px 12px; flex-direction:column; gap:2px;">
-            <span>1:1 사원증 이미지 저장</span>
-            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">메신저·피드 규격 PNG</span>
-          </button>
-          <button type="button" class="btn btn-subtle" id="btnDownload9x16" style="font-size:13.5px; padding:10px 12px; flex-direction:column; gap:2px;">
-            <span>9:16 스토리 이미지 저장</span>
-            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">인스타 스토리 규격 PNG</span>
-          </button>
-        </div>
-
-        <button type="button" class="btn btn-subtle" id="btnCreateInviteLink" style="width:100%;">
-          동료에게 궁합 비교 초대장 링크 복사
-        </button>
-
-        <!-- 팀 단체방 복사용 멘트 박스 -->
-        <div class="groupchat-copy-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <span style="font-size:12.5px; font-weight:800; color:var(--ink-black);">단체방 공유용 메시지 템플릿</span>
-            <div style="display:flex; gap:4px;">
-              <button type="button" class="masthead-btn" data-tone="casual" style="background:${state.shareTone === "casual" ? "var(--excel-green)" : "#fff"}; color:${state.shareTone === "casual" ? "#fff" : "var(--ink-body)"};">캐주얼</button>
-              <button type="button" class="masthead-btn" data-tone="leader" style="background:${state.shareTone === "leader" ? "var(--excel-green)" : "#fff"}; color:${state.shareTone === "leader" ? "#fff" : "var(--ink-body)"};">리더·팀장</button>
-              <button type="button" class="masthead-btn" data-tone="newbie" style="background:${state.shareTone === "newbie" ? "var(--excel-green)" : "#fff"}; color:${state.shareTone === "newbie" ? "#fff" : "var(--ink-body)"};">정중·신입</button>
-            </div>
-          </div>
-          <div class="groupchat-copy-text" id="groupChatTextPreview">${escapeHtml(
-            getGroupChatCopyText(typeInfo, bestInfo, inviteUrl, state.shareTone)
-          )}</div>
-          <button type="button" class="btn btn-navy btn-sm" id="btnCopyGroupChatMsg" style="width:100%;">
-            위 메시지 + 초대 링크 한 번에 복사
-          </button>
-        </div>
-      </section>
-
-      <!-- 3. 상세 업무 성향 해설 시트 -->
+      <!-- 2. 상세 업무 성향 해설 시트 -->
       <section class="editorial-card">
         <div class="section-header-bar">
           <span class="section-num-tag">DETAIL</span>
@@ -1133,7 +1075,7 @@
         </div>
       </section>
 
-      <!-- 4. 찰떡 궁합 & 배울 점 많은 상극 -->
+      <!-- 3. 찰떡 궁합 & 배울 점 많은 상극 -->
       <section class="editorial-card">
         <div class="section-header-bar">
           <span class="section-num-tag">VLOOKUP</span>
@@ -1178,6 +1120,47 @@
               비교하기
             </button>
           </div>
+        </div>
+      </section>
+
+      <!-- 4. 이미지 저장 & 공유 & 동료 궁합 초대 -->
+      <section class="editorial-card">
+        <div class="section-header-bar">
+          <span class="section-num-tag">EXPORT</span>
+          <h2 class="section-title">사원증 저장 & 결과 공유</h2>
+        </div>
+
+        <div class="action-grid-2col" style="margin-bottom:10px;">
+          <button type="button" class="btn btn-primary" id="btnCopyBasicLink">
+            내 결과 링크 복사
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnWebShareSheet">
+            모바일로 결과 공유
+          </button>
+        </div>
+
+        <div class="action-grid-2col" style="margin-bottom:12px;">
+          <button type="button" class="btn btn-subtle" id="btnDownload1x1" style="font-size:13.5px; padding:10px 12px; flex-direction:column; gap:2px;">
+            <span>1:1 사원증 이미지 저장</span>
+            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">메신저·피드 규격 PNG</span>
+          </button>
+          <button type="button" class="btn btn-subtle" id="btnDownload9x16" style="font-size:13.5px; padding:10px 12px; flex-direction:column; gap:2px;">
+            <span>9:16 스토리 이미지 저장</span>
+            <span style="font-size:11px; color:var(--ink-muted); font-weight:500;">인스타 스토리 규격 PNG</span>
+          </button>
+        </div>
+
+        <!-- 동료 궁합 비교 초대장 & 메시지 통합 박스 -->
+        <div class="groupchat-copy-box" style="margin-top:0;">
+          <div style="font-size:12.5px; font-weight:800; color:var(--ink-black);">
+            동료와 업무 궁합 비교하기 (초대장)
+          </div>
+          <div class="groupchat-copy-text" id="groupChatTextPreview">${escapeHtml(
+            getGroupChatCopyText(typeInfo, bestInfo, decodeURIComponent(inviteUrl))
+          )}</div>
+          <button type="button" class="btn btn-navy btn-sm" id="btnCopyGroupChatMsg" style="width:100%;">
+            동료 궁합 비교 초대장 복사
+          </button>
         </div>
       </section>
 
@@ -1240,15 +1223,6 @@
       showToast("9:16 스토리용 이미지를 저장했습니다.");
     });
 
-    document.getElementById("btnCreateInviteLink")?.addEventListener("click", () => {
-      window.MKBIZ_ANALYTICS.trackEvent("invite_create", { inviter_type: typeCode });
-      window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "invite_link" });
-      copyTextToClipboard(
-        inviteUrl,
-        "동료 궁합 초대 링크가 복사되었습니다. 메신저에 붙여넣어 보세요."
-      );
-    });
-
     document.getElementById("btnWebShareSheet")?.addEventListener("click", async () => {
       window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "sheet" });
       const resultUrl = buildShareResultUrl(typeCode, state.nickname, state.axisScores);
@@ -1262,28 +1236,21 @@
         resultUrl
       );
       if (!res.shared && res.reason !== "aborted") {
-        copyTextToClipboard(resultUrl, "결과 사원증 링크를 클립보드에 복사했습니다.");
+        copyTextToClipboard(resultUrl, "내 결과 링크가 복사되었습니다.");
       }
     });
 
     document.getElementById("btnCopyBasicLink")?.addEventListener("click", () => {
       window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "link" });
       const cleanUrl = buildShareResultUrl(typeCode, state.nickname, state.axisScores);
-      copyTextToClipboard(cleanUrl, "결과 사원증 링크가 복사되었습니다. 이 링크를 열면 내 결과가 바로 표시됩니다.");
-    });
-
-    stage.querySelectorAll("[data-tone]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.shareTone = btn.getAttribute("data-tone") || "casual";
-        renderResultScreen(stage);
-      });
+      copyTextToClipboard(cleanUrl, "내 결과 링크가 복사되었습니다.");
     });
 
     document.getElementById("btnCopyGroupChatMsg")?.addEventListener("click", () => {
       window.MKBIZ_ANALYTICS.trackEvent("invite_create", { inviter_type: typeCode });
       window.MKBIZ_ANALYTICS.trackEvent("share_click", { channel: "messenger" });
-      const msg = getGroupChatCopyText(typeInfo, bestInfo, inviteUrl, state.shareTone);
-      copyTextToClipboard(msg, "단체방 공유 메시지와 초대 링크가 복사되었습니다.");
+      const msg = getGroupChatCopyText(typeInfo, bestInfo, inviteUrl);
+      copyTextToClipboard(msg, "동료 궁합 비교 초대장이 복사되었습니다. 메신저에 붙여넣어 보세요.");
     });
 
     document.getElementById("cardBestMatch")?.addEventListener("click", () => {
