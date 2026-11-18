@@ -220,50 +220,83 @@
       R: "차분 재정비"
     };
 
+    const myTypeObj = window.MKBIZ_DATA.types[c1] || window.MKBIZ_DATA.types.SDLC;
+    const partnerTypeObj = window.MKBIZ_DATA.types[c2] || window.MKBIZ_DATA.types.SDHR;
+    const myLabel = myTypeObj.name;
+    const partnerLabel = partnerTypeObj.name;
+
+    const tempoDesc = sameTempo
+      ? c1[0] === "S"
+        ? `두 사람 모두 에너지가 모였을 때 단숨에 몰입해 끝내는 스타일이라 업무 속도감이 시원하게 맞아떨어집니다.`
+        : `두 사람 모두 마감 직전 벼락치기보다 매일 꾸준히 나누어 쌓아가는 스타일이라 일정 관리가 한결 편안합니다.`
+      : c1[0] === "S"
+      ? `${myLabel}님은 마감 직전에 초집중해서 끝내려 하고, ${partnerLabel}님은 며칠 전부터 미리 나누어 진행하려 해서 진도 체크 타이밍이 어긋나기 쉽습니다. 중간 점검일만 미리 약속해 두세요.`
+      : `${myLabel}님은 매일 조금씩 미리 나누어 진행하려 하고, ${partnerLabel}님은 마감 직전에 몰입해 한 번에 끝내려 해서 속도 차이로 답답할 수 있습니다. 최종 마감일과 중간 공유일만 명확히 맞춰두세요.`;
+
+    const decisionDesc = sameDecision
+      ? c1[1] === "D"
+        ? `두 사람 모두 객관적인 수치와 검증된 레퍼런스를 기준으로 판단하기 때문에 긴 설명 없이도 대화가 빠르게 통합니다.`
+        : `두 사람 모두 전체적인 맥락과 스토리, 현장의 감각을 중요하게 여겨 아이디어를 나눌 때 죽이 잘 맞습니다.`
+      : c1[1] === "D"
+      ? `${myLabel}님은 ‘객관적 숫자와 근거’를 먼저 확인하려 하고, ${partnerLabel}님은 ‘전체 흐름과 기획 의도’를 먼저 보려 해서 설득 포인트가 다릅니다. 대화할 때 데이터와 배경 스토리를 한 줄씩 함께 짚어주세요.`
+      : `${myLabel}님은 ‘전체 맥락과 스토리’를 먼저 중시하고, ${partnerLabel}님은 ‘정확한 수치와 전례’를 먼저 따져보려 해서 대화 핀트가 어긋날 수 있습니다. 아이디어를 제안할 때 참고 수치나 사례를 하나 곁들여 보세요.`;
+
+    const collabDesc = diffCollab
+      ? c1[2] === "L"
+        ? `${myLabel}님이 앞에서 결론과 방향타를 잡아주면, ${partnerLabel}님이 팀원들의 의견을 세심하게 조율해 주어 이상적인 분업을 이룹니다.`
+        : `${partnerLabel}님이 앞에서 방향과 결단을 주도하고, ${myLabel}님이 사이에서 의견을 부드럽게 조율해 주어 빈틈없는 팀워크가 만들어집니다.`
+      : c1[2] === "L"
+      ? `협업은 한 명이 끌고 한 명이 조율할 때 시너지(+25점)가 나는데, 두 사람 모두 주도권을 잡고 방향을 정하려는 리더형이라 의견이 부딪칠 수 있습니다. 시작 전에 담당 영역(R&R)을 명확히 나누는 것이 핵심입니다.`
+      : `협업은 한 명이 끌고 한 명이 조율할 때 시너지(+25점)가 나는데, 두 사람 모두 상대방을 배려하고 양보하는 조율형이라 최종 결정을 내리는 시간이 길어질 수 있습니다. 시작할 때 최종 결정권자를 미리 정해두세요.`;
+
+    const crisisDesc = diffCrisis
+      ? c1[3] === "C"
+        ? `돌발 변수 앞에서 ${myLabel}님이 즉시 플랜 B로 정면 돌파하면, ${partnerLabel}님이 침착하게 우선순위와 리스크를 정리해 주어 위기에 흔들리지 않습니다.`
+        : `돌발 변수 앞에서 ${partnerLabel}님이 빠르게 실행하며 돌파구를 열고, ${myLabel}님이 차분하게 원인과 수습 순서를 잡아주어 완벽한 완급 조절이 됩니다.`
+      : c1[3] === "C"
+      ? `위기 대응은 행동파와 신중파가 만날 때 시너지(+25점)가 나는데, 두 사람 모두 변수가 생기면 일단 부딪쳐 해결하려는 돌파형이라 속도는 빠르지만 세부 점검을 놓칠 수 있습니다. 실행 직전 1분만 체크리스트를 함께 확인하세요.`
+      : `위기 대응은 행동파와 신중파가 만날 때 시너지(+25점)가 나는데, 두 사람 모두 돌발 상황에서 일단 멈춰 원인부터 파악하려는 신중형이라 초동 대처가 늦어질 수 있습니다. 긴급 상황에서는 실행 마감 시간부터 먼저 정해두세요.`;
+
     const axisComparisons = [
       {
         axisName: "일하는 템포",
         myCode: codeLabelMap[c1[0]] || c1[0],
         partnerCode: codeLabelMap[c2[0]] || c2[0],
         isGood: sameTempo,
-        tagText: sameTempo ? "호흡 일치 +25점" : "속도 조율",
-        desc: sameTempo
-          ? "업무를 몰아치거나 나누어 하는 호흡이 같아 일정 맞추기가 편안합니다."
-          : "단기 집중형과 꾸준한 배분형이 만나 중간 점검일만 맞추면 빈틈이 없습니다."
+        tagText: sameTempo ? "호흡 일치 +25점" : "속도 차이 0점",
+        desc: tempoDesc
       },
       {
         axisName: "판단 기준",
         myCode: codeLabelMap[c1[1]] || c1[1],
         partnerCode: codeLabelMap[c2[1]] || c2[1],
         isGood: sameDecision,
-        tagText: sameDecision ? "기준 일치 +25점" : "관점 확장",
-        desc: sameDecision
-          ? "설득할 때 중요하게 보는 근거(숫자 vs 맥락)가 같아 대화가 빠르게 통합니다."
-          : "데이터파와 직관파가 만나 숫자와 스토리를 모두 챙길 수 있는 조합입니다."
+        tagText: sameDecision ? "기준 일치 +25점" : "관점 차이 0점",
+        desc: decisionDesc
       },
       {
         axisName: "협업 방식",
         myCode: codeLabelMap[c1[2]] || c1[2],
         partnerCode: codeLabelMap[c2[2]] || c2[2],
         isGood: diffCollab,
-        tagText: diffCollab ? "역할 보완 +25점" : "동일 포지션",
-        desc: diffCollab
-          ? "방향을 잡는 리더형과 의견을 묶는 조율형이 만나 이상적인 분업을 이룹니다."
+        tagText: diffCollab
+          ? "역할 보완 +25점"
           : c1[2] === "L"
-          ? "두 사람 모두 주도적이라 시작 전에 담당 영역을 나누면 시너지가 납니다."
-          : "두 사람 모두 배려심이 깊어 최종 결정권자만 미리 정해두면 속도가 빨라집니다."
+          ? "리더 역할 겹침 0점"
+          : "조율 역할 겹침 0점",
+        desc: collabDesc
       },
       {
         axisName: "위기 대응",
         myCode: codeLabelMap[c1[3]] || c1[3],
         partnerCode: codeLabelMap[c2[3]] || c2[3],
         isGood: diffCrisis,
-        tagText: diffCrisis ? "완급 조화 +25점" : "동일 대응",
-        desc: diffCrisis
-          ? "즉시 치고 나가는 돌파형과 침착한 재정비형이 만나 위기에서 흔들리지 않습니다."
+        tagText: diffCrisis
+          ? "완급 조화 +25점"
           : c1[3] === "C"
-          ? "위기 때 둘 다 빠르게 돌파하니, 실행 직전 1분만 체크리스트를 점검해 보세요."
-          : "둘 다 차분하고 신중하니, 긴급 상황에서는 마감 시간을 먼저 정해두면 좋습니다."
+          ? "돌파 역할 겹침 0점"
+          : "신중 역할 겹침 0점",
+        desc: crisisDesc
       }
     ];
 
@@ -1439,7 +1472,7 @@
               <div class="detail-item" style="background:${ac.isGood ? "var(--excel-green-soft)" : "#FFFFFF"};">
                 <div class="pair-axis-header">
                   <strong style="font-size:13.5px;">${ac.axisName} : ${ac.myCode} × ${ac.partnerCode}</strong>
-                  <span class="stamp-pill" style="font-size:11px; padding:2px 8px; background:${ac.isGood ? "var(--excel-green)" : "var(--ink-muted)"}; color:#fff; border:none;">${ac.tagText}</span>
+                  <span class="stamp-pill" style="font-size:11px; padding:2px 8px; background:${ac.isGood ? "var(--excel-green)" : "var(--mk-rose-soft)"}; color:${ac.isGood ? "#fff" : "var(--mk-rose)"}; border:${ac.isGood ? "none" : "1px solid #FECACA"};">${ac.tagText}</span>
                 </div>
                 <p style="font-size:13px; color:var(--ink-body);">${escapeHtml(ac.desc)}</p>
               </div>
