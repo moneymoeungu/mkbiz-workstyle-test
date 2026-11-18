@@ -508,15 +508,6 @@
                </button>`
             : ""
         }
-
-        <div class="trust-checklist" role="note" aria-label="개인정보 및 활용 안내">
-          <div class="trust-item">
-            <span><strong>익명 보장</strong> — 실명·사번·부서를 받지 않으며 입력한 닉네임도 서버에 저장되지 않습니다.</span>
-          </div>
-          <div class="trust-item">
-            <span><strong>소통 시트</strong> — 인사·평가와 무관하며 동료와 가볍게 이야기를 나누기 위한 콘텐츠입니다.</span>
-          </div>
-        </div>
       </article>
 
       <section class="editorial-card" style="padding:16px 18px;">
