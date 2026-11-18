@@ -1447,7 +1447,7 @@
                 (ac) => `
               <div class="detail-item" style="background:${ac.isGood ? "var(--excel-green-soft)" : "#FFFFFF"};">
                 <div class="pair-axis-header">
-                  <strong style="font-size:13.5px;">${ac.axisName} · ${ac.myCode} × ${ac.partnerCode}</strong>
+                  <strong style="font-size:13.5px;">${ac.axisName} : ${ac.myCode} × ${ac.partnerCode}</strong>
                   <span class="stamp-pill" style="font-size:11px; padding:2px 8px; background:${ac.isGood ? "var(--excel-green)" : "var(--ink-muted)"}; color:#fff; border:none;">${ac.tagText}</span>
                 </div>
                 <p style="font-size:13px; color:var(--ink-body);">${escapeHtml(ac.desc)}</p>
