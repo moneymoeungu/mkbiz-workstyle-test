@@ -1052,7 +1052,7 @@
               ? `
             <div class="deep-dive-panel" style="width:100%; margin-top:14px; text-align:left;">
               <div class="deep-dive-overview">
-                <div class="deep-dive-subtitle">오피스 생태계 관찰 리포트</div>
+                <div class="deep-dive-subtitle">업무 스타일 상세 분석</div>
                 <p>${escapeHtml(typeInfo.deepDive.overview)}</p>
               </div>
 
@@ -1657,7 +1657,7 @@
               </button>
               <div class="deep-dive-panel" id="modalDeepDivePanel" hidden>
                 <div class="deep-dive-overview">
-                  <div class="deep-dive-subtitle">오피스 생태계 관찰 리포트</div>
+                  <div class="deep-dive-subtitle">업무 스타일 상세 분석</div>
                   <p>${escapeHtml(t.deepDive.overview)}</p>
                 </div>
                 <table class="excel-axis-table deep-dive-table">
